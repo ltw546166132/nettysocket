@@ -9,7 +9,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
-public class NettyTestClass {
+public class NettyServer {
     public static void main(String[] args) throws InterruptedException {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -20,7 +20,6 @@ public class NettyTestClass {
             .option(ChannelOption.SO_BACKLOG, 128)  //设置线程队列得到的连接个数
             .childOption(ChannelOption.SO_KEEPALIVE, true) //设置保持活动链接状态
             .childHandler(new ChannelInitializer<SocketChannel>() {  //创建一个通道测试对象
-
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
                     socketChannel.pipeline().addLast(new NettyServerHandler());
