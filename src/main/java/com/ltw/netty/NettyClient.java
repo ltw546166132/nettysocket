@@ -8,6 +8,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
+/**
+ * @author ltw
+ */
 public class NettyClient {
     public static void main(String[] args) throws InterruptedException {
         NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup();
