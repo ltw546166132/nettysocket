@@ -12,7 +12,6 @@ import io.netty.util.CharsetUtil;
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("server ctx"+ ctx);
         ByteBuf buf = (ByteBuf)msg;
         System.out.println("客户端发送消息是:"+ buf.toString(CharsetUtil.UTF_8));
         System.out.println("客户端地址"+ ctx.channel().remoteAddress());
