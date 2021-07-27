@@ -21,10 +21,6 @@ import org.springframework.core.env.Environment;
 import java.net.InetSocketAddress;
 import java.util.*;
 
-/**
- * @author Yeauty
- * @version 1.0
- */
 public class ServerEndpointExporter extends ApplicationObjectSupport implements SmartInitializingSingleton, BeanFactoryAware {
 
     @Autowired

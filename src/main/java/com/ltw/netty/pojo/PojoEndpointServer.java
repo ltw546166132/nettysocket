@@ -16,10 +16,6 @@ import org.springframework.beans.TypeMismatchException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-/**
- * @author Yeauty
- * @version 1.0
- */
 public class PojoEndpointServer {
 
     private static final AttributeKey<Object> POJO_KEY = AttributeKey.valueOf("WEBSOCKET_IMPLEMENT");

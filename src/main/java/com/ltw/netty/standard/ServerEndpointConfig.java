@@ -6,10 +6,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-/**
- * @author Yeauty
- * @version 1.0
- */
 public class ServerEndpointConfig {
 
     private final String HOST;

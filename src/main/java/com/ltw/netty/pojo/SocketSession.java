@@ -13,10 +13,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 
-/**
- * @author Yeauty
- * @version 1.0
- */
 public class SocketSession {
 
     private final Channel channel;
