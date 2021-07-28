@@ -29,6 +29,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
         channelGroup.writeAndFlush("[客户端]"+ channel.remoteAddress()+" 下线了");
+        channelGroup.remove(channel);
     }
 
     @Override
