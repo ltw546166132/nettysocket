@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.bidimap.DualHashBidiMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +25,6 @@ public class YCHandler extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         String id = ctx.channel().id().toString();
-        Class var3 = YCHandler.class;
-        Class var4 = YCHandler.class;
         synchronized(YCHandler.class) {
             ctxMap.put(id, ctx);
             System.out.println("新建链接,连接数: " + ctxMap.size());
@@ -35,8 +34,6 @@ public class YCHandler extends SimpleChannelInboundHandler<ByteBuf> {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         String id = ctx.channel().id().toString();
-        Class var4 = YCHandler.class;
-        Class var5 = YCHandler.class;
         synchronized(YCHandler.class) {
             Map<String, Object> map = (Map)devMap.get(id);
             if (map != null) {
