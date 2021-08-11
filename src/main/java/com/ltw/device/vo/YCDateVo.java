@@ -1,10 +1,12 @@
 package com.ltw.device.vo;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Data
+@ToString
 public class YCDateVo {
     private String deviceNum;
     private LocalDateTime dateSendTime;

@@ -1,8 +1,6 @@
 package com.ltw.device;
 
-import com.alibaba.fastjson.JSON;
 import com.ltw.config.netty.NettyServerConfig;
-import com.ltw.device.common.CommonConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -12,10 +10,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -35,7 +30,7 @@ public class YCServer {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
                     ChannelPipeline pipeline = socketChannel.pipeline();
-                    pipeline.addLast(new ChannelHandler[]{new YCHandler()});
+                    pipeline.addLast(new YCHandler());
                     pipeline.addLast(new LineBasedFrameDecoder(nettyConfig.getMaxFrameLength()));
                     pipeline.addLast(new LengthFieldPrepender(2));
                 }
