@@ -28,7 +28,7 @@ public class ChatClient {
                 }
             });
             System.out.println("客户端  is  ok");
-            ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6668).sync();
+            ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6666).sync();
             Channel channel = channelFuture.channel();
             Scanner scanner = new Scanner(System.in);
             while(scanner.hasNextLine()){

@@ -1,4 +1,4 @@
-package com.ltw.config;
+package com.ltw.config.netty;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
