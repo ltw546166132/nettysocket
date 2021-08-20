@@ -187,7 +187,7 @@ logging:
 # netty配置
 netty:
   # 端口号
-  port: 6666
+  port: 6677
   # 最大线程数
   maxThreads: 1024
   # 数据包的最大长度
