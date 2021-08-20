@@ -31,7 +31,8 @@ public class DelayQueueManager implements CommandLineRunner {
      * 初始化
      */
     public void init() {
-        GlobalThreadPool.getExecutor().execute(() -> {
+        executor = GlobalThreadPool.getExecutor();
+        executor.execute(() -> {
             execute();
         });
     }
