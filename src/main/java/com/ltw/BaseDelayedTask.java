@@ -17,13 +17,13 @@ public class BaseDelayedTask<T extends Runnable> implements Delayed {
     }
 
     public BaseDelayedTask(long time, T task) {
-        this.time = System.nanoTime() + time;
+        this.time = System.currentTimeMillis() + time;
         this.task = task;
     }
 
     public BaseDelayedTask(String id, long time, T task) {
         this.id = id;
-        this.time = System.nanoTime() + time;
+        this.time = System.currentTimeMillis() + time;
         this.task = task;
     }
 
@@ -39,7 +39,7 @@ public class BaseDelayedTask<T extends Runnable> implements Delayed {
 
     @Override
     public long getDelay(TimeUnit unit) {
-        return unit.convert(this.time - System.nanoTime(), TimeUnit.NANOSECONDS);
+        return unit.convert(this.time - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
     }
 
     public T getTask() {
@@ -53,7 +53,7 @@ public class BaseDelayedTask<T extends Runnable> implements Delayed {
     @Override
     public int compareTo(Delayed o) {
         BaseDelayedTask o1 = (BaseDelayedTask) o;
-        return (int) (this.getDelay(TimeUnit.NANOSECONDS) - o.getDelay(TimeUnit.NANOSECONDS));
+        return (int) (this.getDelay(TimeUnit.MILLISECONDS) - o.getDelay(TimeUnit.MILLISECONDS));
     }
 
 }

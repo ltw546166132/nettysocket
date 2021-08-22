@@ -71,7 +71,7 @@ public class DelayQueueManager implements CommandLineRunner {
      */
     public void put(Runnable task, long time, TimeUnit unit) {
         // 获取延时时间
-        long timeout = TimeUnit.NANOSECONDS.convert(time, unit);
+        long timeout = TimeUnit.MILLISECONDS.convert(time, unit);
         // 将任务封装成实现Delayed接口的消息体
         BaseDelayedTask<?> delayOrder = new BaseDelayedTask<>(timeout, task);
         // 将消息体放到延时队列中
@@ -89,7 +89,7 @@ public class DelayQueueManager implements CommandLineRunner {
      */
     public void put(String Identifiers, Runnable task, long time, TimeUnit unit) {
         // 获取延时时间
-        long timeout = TimeUnit.NANOSECONDS.convert(time, unit);
+        long timeout = TimeUnit.MILLISECONDS.convert(time, unit);
         // 将任务封装成实现Delayed接口的消息体
         BaseDelayedTask<?> delayOrder = new BaseDelayedTask<>(Identifiers, timeout, task);
         // 将消息体放到延时队列中
