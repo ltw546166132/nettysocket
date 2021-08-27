@@ -1,7 +1,13 @@
 package com.ltw;
 
 import cn.hutool.core.thread.GlobalThreadPool;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBlockingDeque;
+import org.redisson.api.RDelayedQueue;
+import org.redisson.api.RQueue;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import java.util.Map;
@@ -13,6 +19,9 @@ import java.util.concurrent.atomic.AtomicLong;
 @Slf4j
 @Component
 public class DelayQueueManager implements CommandLineRunner {
+    @Autowired
+    private RedissonClient redissonClient;
+
     private final static int DEFAULT_THREAD_NUM = 5;
     private static int thread_num = DEFAULT_THREAD_NUM;
     // 固定大小线程池
@@ -24,13 +33,15 @@ public class DelayQueueManager implements CommandLineRunner {
     private static final AtomicLong atomic = new AtomicLong(0);
     private final long n = 1;
     private static DelayQueueManager instance = new DelayQueueManager();
-
+    private RDelayedQueue<BaseDelayedTask<?>> rdeque;
 
 
     /**
      * 初始化
      */
     public void init() {
+        RQueue<BaseDelayedTask<?>> message = redissonClient.getQueue("message");
+        rdeque = redissonClient.getDelayedQueue(message);
         executor = GlobalThreadPool.getExecutor();
         executor.execute(() -> {
             execute();
@@ -69,13 +80,8 @@ public class DelayQueueManager implements CommandLineRunner {
      * @param unit
      *            时间单位
      */
-    public void put(Runnable task, long time, TimeUnit unit) {
-        // 获取延时时间
-        long timeout = TimeUnit.MILLISECONDS.convert(time, unit);
-        // 将任务封装成实现Delayed接口的消息体
-        BaseDelayedTask<?> delayOrder = new BaseDelayedTask<>(timeout, task);
-        // 将消息体放到延时队列中
-        delayQueue.put(delayOrder);
+    public void putDelayQueue(Runnable task, long time, TimeUnit unit) {
+        putDelayQueue(null, task, time, unit);
     }
 
     /**
@@ -87,13 +93,18 @@ public class DelayQueueManager implements CommandLineRunner {
      * @param unit
      *            时间单位
      */
-    public void put(String Identifiers, Runnable task, long time, TimeUnit unit) {
+    public void putDelayQueue(String Identifiers, Runnable task, long time, TimeUnit unit) {
         // 获取延时时间
         long timeout = TimeUnit.MILLISECONDS.convert(time, unit);
         // 将任务封装成实现Delayed接口的消息体
-        BaseDelayedTask<?> delayOrder = new BaseDelayedTask<>(Identifiers, timeout, task);
+        BaseDelayedTask<?> delayOrder = null;
+        if(StrUtil.isNotBlank(Identifiers)){
+             delayOrder = new BaseDelayedTask<>(Identifiers, timeout, task);
+        }else{
+             delayOrder = new BaseDelayedTask<>(timeout, task);
+        }
         // 将消息体放到延时队列中
-        delayQueue.put(delayOrder);
+        rdeque.offer(delayOrder);
     }
 
     /**

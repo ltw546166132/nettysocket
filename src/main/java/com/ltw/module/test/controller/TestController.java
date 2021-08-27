@@ -29,7 +29,7 @@ public class TestController {
         int i = RandomUtil.randomInt(1, 11);
         UUID uuid = UUID.fastUUID();
         System.out.println("uuid"+uuid+"开始时间:"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))+"延迟"+i+"秒");
-        delayQueueManager.put(() -> {
+        delayQueueManager.putDelayQueue(() -> {
             System.out.println("uuid"+uuid+"执行时间:"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }, i, TimeUnit.SECONDS);
     }
