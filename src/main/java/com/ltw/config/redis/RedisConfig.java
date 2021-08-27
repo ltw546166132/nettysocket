@@ -6,6 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
 import com.ltw.common.enums.CacheConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.codec.KryoCodec;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -17,7 +21,7 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.*;
-
+import org.redisson.config.Config;
 import javax.annotation.Resource;
 import java.time.Duration;
 
@@ -31,6 +35,13 @@ import static java.util.Collections.singletonMap;
 @EnableCaching
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
+
+	@Value("${spring.redis.host}")
+	private String host;
+	@Value("${spring.redis.port}")
+	private String port;
+//	@Value("${spring.redis.password}")
+//	private String password;
 
 	@Resource
 	private LettuceConnectionFactory lettuceConnectionFactory;
@@ -107,6 +118,21 @@ public class RedisConfig extends CachingConfigurerSupport {
 				.withInitialCacheConfigurations(singletonMap(CacheConstant.PLUGIN_MALL_PAGE_LIST, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(24)).disableCachingNullValues()))
 				.transactionAware().build();
 		return cacheManager;
+	}
+
+	/**
+	 * RedissonClient,单机模式
+	 *
+	 * @return
+	 */
+	@Bean(destroyMethod = "shutdown")
+	public RedissonClient redisson() {
+		Config config = new Config();
+//		config.useSingleServer().setAddress("redis://" + host + ":" + port).setPassword(password);
+		config.useSingleServer().setAddress("redis://" + host + ":" + port);
+
+		config.setCodec(new KryoCodec());
+		return Redisson.create(config);
 	}
 
 }
