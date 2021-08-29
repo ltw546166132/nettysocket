@@ -33,7 +33,7 @@
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
         <dynamic-datasource-spring-boot-starter.version>3.2.0</dynamic-datasource-spring-boot-starter.version>
         <hutool-all.version>5.7.1</hutool-all.version>
-        <redisson.version>3.13.6</redisson.version>
+        <redisson.version>3.12.5</redisson.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <guava.version>29.0-jre</guava.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
@@ -188,7 +188,7 @@
         <!--分布式锁-->
         <dependency>
             <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
             <version>${redisson.version}</version>
         </dependency>
 

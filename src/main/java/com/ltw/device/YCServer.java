@@ -1,6 +1,6 @@
 package com.ltw.device;
 
-import com.ltw.config.netty.NettyServerConfig;
+import com.ltw.common.config.netty.NettyServerConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
