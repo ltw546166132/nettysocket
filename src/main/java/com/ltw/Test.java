@@ -1,15 +1,12 @@
 package com.ltw;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.thread.GlobalThreadPool;
-import cn.hutool.core.util.RandomUtil;
+import com.ltw.test.config.MyConfig;
+import com.ltw.test.config.MyLog;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.LinkedList;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java.util.concurrent.DelayQueue;
-import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutorService;
-import java.util.function.Consumer;
 
 @Slf4j
 public class Test {
@@ -27,11 +24,28 @@ public class Test {
 //        for (Consumer consumer: testConsumers) {
 //            consumer.accept(RandomUtil.randomString(3));
 //        }
-String a = "1234567890";
-        String substring = a.substring(0, 5);
-        log.info(substring);
-        log.info(a.length()+"");
+
+//        ArrayList<TestUser> testUsers = new ArrayList<>();
+//        for(int i=0;i<10;i++){
+//            int i1 = RandomUtil.randomInt(1, 20);
+//            TestUser build = TestUser.builder().id(Long.parseLong(i1 + "")).name(i1 + "").build();
+//            testUsers.add(build);
+//        }
+//        List<TestUser> sort = CollectionUtil.sort(testUsers, (o1, o2) -> {
+//            Long id = o1.getId();
+//            Long id1 = o2.getId();
+//            if (id < id1) {
+//                return -1;
+//            } else if (id > id1) {
+//                return 1;
+//            }
+//            return 0;
+//        });
+//        sort.forEach(testUser -> System.out.println(testUser.getId()));
 
 
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
+        MyLog bean = context.getBean(MyLog.class);
     }
+
 }

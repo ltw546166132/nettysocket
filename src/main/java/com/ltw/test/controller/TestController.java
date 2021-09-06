@@ -1,4 +1,4 @@
-package com.ltw.module.test.controller;
+package com.ltw.test.controller;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.NumberUtil;
