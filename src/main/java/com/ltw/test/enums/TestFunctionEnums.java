@@ -2,11 +2,11 @@ package com.ltw.test.enums;
 
 import com.ltw.test.entity.TestUser;
 import com.ltw.test.utils.IdCardUtil;
-import io.swagger.models.auth.In;
-
+import lombok.Getter;
 import java.util.List;
 import java.util.function.Function;
 
+@Getter
 public enum TestFunctionEnums {
     AGE20("age20", "20岁以下", (list)->{
         return countNum(list, 20);

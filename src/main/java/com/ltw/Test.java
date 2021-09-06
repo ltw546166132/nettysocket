@@ -1,10 +1,15 @@
 package com.ltw;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.thread.GlobalThreadPool;
 import com.ltw.test.config.MyConfig;
 import com.ltw.test.config.MyLog;
+import com.ltw.test.entity.TestUser;
+import com.ltw.test.enums.TestFunctionEnums;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.List;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.ExecutorService;
 
@@ -46,6 +51,18 @@ public class Test {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
         MyLog bean = context.getBean(MyLog.class);
+
+
+        TestUser build = TestUser.builder().idCard("430102201003072712").build();
+        TestUser build1 = TestUser.builder().idCard("430102199003070936").build();
+        TestUser build2 = TestUser.builder().idCard("430102199003075390").build();
+        List<TestUser> list = CollectionUtil.list(false);
+        list.add(build2);
+        list.add(build1);
+        list.add(build);
+        Integer num = (Integer) TestFunctionEnums.AGE20.getGetCountNum().apply(list);
+        System.out.println(num);
+
     }
 
 }
