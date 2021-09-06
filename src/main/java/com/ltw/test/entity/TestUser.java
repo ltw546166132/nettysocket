@@ -10,5 +10,6 @@ import java.time.LocalDateTime;
 public class TestUser {
     private Long id;
     private String name;
+    private String idCard;
     private LocalDateTime localDateTime;
 }
