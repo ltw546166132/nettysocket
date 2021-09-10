@@ -1,5 +1,6 @@
 package com.ltw.test.utils;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 public class IdCardUtil {
@@ -18,5 +19,12 @@ public class IdCardUtil {
             age = yearNow - year - 1;
         }
         return age;
+    }
+
+    public static LocalDate getBirthdayByIdCard(String IdCard){
+        int year = Integer.valueOf(IdCard.substring(6, 10));
+        int month = Integer.valueOf(IdCard.substring(10,12));
+        int day = Integer.valueOf(IdCard.substring(12,14));
+        return LocalDate.of(year, month, day);
     }
 }
