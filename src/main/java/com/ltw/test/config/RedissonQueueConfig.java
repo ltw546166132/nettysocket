@@ -47,11 +47,11 @@ public class RedissonQueueConfig {
                         @Header(RedissonHeaders.DELIVERY_QUEUE_NAME) String queue,
                         @Header(RedissonHeaders.SEND_TIMESTAMP) long sendTimestamp,
                         @Header(RedissonHeaders.EXPECTED_DELAY_MILLIS) long expectedDelayMillis,
-                        @Header(value = "my_header", required = false, defaultValue = "test") String myHeader,
+                        @Header(value = "count", required = false, defaultValue = "0") String count,
                         @Payload TestUser testUser) {
         System.out.println(messageId);
         System.out.println(queue);
-        System.out.println(myHeader);
+        System.out.println(count);
         long actualDelay = System.currentTimeMillis() - (sendTimestamp + expectedDelayMillis);
         System.out.println("receive " + testUser + ", delayed " + actualDelay + " millis");
     }

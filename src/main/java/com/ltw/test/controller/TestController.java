@@ -39,9 +39,11 @@ public class TestController {
         System.out.println(path);
 
         TestUser testUser = TestUser.builder().id(1L).name("testName").build();
-        for(int i=0; i<7; i++){
-            int i1 = RandomUtil.randomInt(1, 9);
-            redissonTemplate.sendWithDelay("test", testUser, i1*1000);
+        for(int i=0; i<100; i++){
+            int i1 = RandomUtil.randomInt(1, 10);
+            HashMap<String, Object> stringIntegerHashMap = new HashMap<>();
+            stringIntegerHashMap.put("count", i);
+            redissonTemplate.sendWithDelay("test", testUser, stringIntegerHashMap,i1*1000);
         }
 
     }
