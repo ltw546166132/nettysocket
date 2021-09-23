@@ -15,13 +15,15 @@ public class RedisDelayQueueRunner implements CommandLineRunner {
     @Autowired
     private RedisDelayQueueUtil redisDelayQueueUtil;
 
+    private static boolean flag = false;
+
     @Override
     public void run(String... args) {
         RedisDelayQueueEnum[] queueEnums = RedisDelayQueueEnum.values();
         for (RedisDelayQueueEnum queueEnum : queueEnums) {
             GlobalThreadPool.getExecutor().execute(() -> {
                 Object value = null;
-                while (true){
+                while (flag){
                     try {
                         value = redisDelayQueueUtil.getDelayQueue(queueEnum.getCode());
                         if (value != null) {
@@ -35,5 +37,9 @@ public class RedisDelayQueueRunner implements CommandLineRunner {
             });
         }
         log.info("Redis延迟队列启动成功");
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Redis延迟队列关闭");
+        }));
     }
 }

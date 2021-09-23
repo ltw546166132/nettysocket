@@ -33,7 +33,7 @@
         <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
         <dynamic-datasource-spring-boot-starter.version>3.2.0</dynamic-datasource-spring-boot-starter.version>
         <hutool-all.version>5.7.1</hutool-all.version>
-        <redisson.version>3.12.5</redisson.version>
+        <redisson.version>3.15.0</redisson.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <guava.version>29.0-jre</guava.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
@@ -258,6 +258,11 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.63.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>io.gitee.the-best-riven</groupId>
+            <artifactId>smart-redisson-spring-boot-starter</artifactId>
+            <version>1.1.5</version>
         </dependency>
     </dependencies>
 

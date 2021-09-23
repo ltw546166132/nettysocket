@@ -159,6 +159,12 @@ spring:
         min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
       shutdown-timeout: 100ms
     timeout: 2000
+  smart-redisson:
+    server-type: single
+    server-address: 47.103.106.32:6379
+#    server-type: cluster
+#    server-address: localhost:7000,localhost:7001,localhost:7002
+#    password: 123456
 
 
 #mybatis plus 设置
