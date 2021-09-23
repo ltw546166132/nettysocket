@@ -3,9 +3,11 @@ package com.ltw.test.controller;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.ltw.DelayQueueManager;
 import com.ltw.test.enums.RedisDelayQueueEnum;
 import com.ltw.test.utils.RedisDelayQueueUtil;
+import com.ltw.utils.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +27,12 @@ public class TestController {
 
     @GetMapping
     public void test(){
-        for(int i=0; i<7; i++){
-            putout();
-        }
+//        for(int i=0; i<7; i++){
+//            putout();
+//        }
+        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"static";
+        System.out.println(path);
+
     }
 
     private void putout(){

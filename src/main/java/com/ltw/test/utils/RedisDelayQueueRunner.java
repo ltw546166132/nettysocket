@@ -34,6 +34,6 @@ public class RedisDelayQueueRunner implements CommandLineRunner {
                 }
             });
         }
-        log.info("(Redis延迟队列启动成功)");
+        log.info("Redis延迟队列启动成功");
     }
 }

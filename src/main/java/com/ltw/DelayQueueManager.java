@@ -40,8 +40,8 @@ public class DelayQueueManager implements CommandLineRunner {
      * 初始化
      */
     public void init() {
-        RQueue<BaseDelayedTask<?>> message = redissonClient.getQueue("message");
-        rdeque = redissonClient.getDelayedQueue(message);
+//        RQueue<BaseDelayedTask<?>> message = redissonClient.getQueue("message");
+//        rdeque = redissonClient.getDelayedQueue(message);
         executor = GlobalThreadPool.getExecutor();
         executor.execute(() -> {
             execute();

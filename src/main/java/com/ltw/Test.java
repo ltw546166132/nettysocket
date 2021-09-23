@@ -1,7 +1,9 @@
 package com.ltw;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.thread.GlobalThreadPool;
+import cn.hutool.core.util.IdcardUtil;
 import com.ltw.test.config.MyConfig;
 import com.ltw.test.config.MyLog;
 import com.ltw.test.entity.TestUser;
@@ -9,6 +11,7 @@ import com.ltw.test.enums.TestFunctionEnums;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.ExecutorService;
@@ -63,6 +66,14 @@ public class Test {
         Integer num = (Integer) TestFunctionEnums.AGE20.getGetCountNum().apply(list);
         System.out.println(num);
 
+
+
+        DateTime birthDate = IdcardUtil.getBirthDate("340621199812264428");
+        System.out.println(birthDate.year());
+        System.out.println(birthDate.month());
+        System.out.println(birthDate.dayOfMonth());
+        Date date = birthDate.toJdkDate();
+        System.out.println(date);
     }
 
 }
