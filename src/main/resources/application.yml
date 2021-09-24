@@ -23,7 +23,7 @@ management:
         include: metrics,httptrace
 spring:
   application:
-    name: jd-match
+    name: projectnetty
   servlet:
     multipart:
       max-file-size: 10MB
@@ -56,8 +56,8 @@ spring:
 #            threadsInheritContextClassLoaderOfInitializingThread: true
   #json 时间戳统一转换
   jackson:
-    date-format:   yyyy-MM-dd HH:mm:ss
-    time-zone:   GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   jpa:
     open-in-view: false
   activiti:
@@ -187,7 +187,7 @@ mybatis-plus:
 #Mybatis输出sql日志
 logging:
   level:
-    com.jdmatch: debug
+    com.ltw: debug
   config: classpath:logback-spring.xml
 
 # netty配置
