@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.thread.GlobalThreadPool;
 import cn.hutool.core.util.IdcardUtil;
+import com.alibaba.fastjson.JSON;
 import com.ltw.test.config.MyConfig;
 import com.ltw.test.config.MyLog;
 import com.ltw.test.entity.TestUser;
@@ -54,7 +55,7 @@ public class Test {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
         MyLog bean = context.getBean(MyLog.class);
-
+        log.info(JSON.toJSONString(bean));
 
         TestUser build = TestUser.builder().idCard("430102201003072712").build();
         TestUser build1 = TestUser.builder().idCard("430102199003070936").build();

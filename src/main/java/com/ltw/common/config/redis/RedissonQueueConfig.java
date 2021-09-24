@@ -1,4 +1,4 @@
-package com.ltw.test.config;
+package com.ltw.common.config.redis;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ltw.test.entity.TestUser;
