@@ -6,11 +6,14 @@ import com.ltw.test.entity.TestUser;
 import com.ltw.test.utils.RedisDelayQueueUtil;
 import com.riven.redisson.config.RedissonTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/test")
@@ -21,22 +24,22 @@ public class TestController {
     RedisDelayQueueUtil redisDelayQueueUtil;
     @Autowired
     private RedissonTemplate redissonTemplate;
+    @Resource
+    private RedisTemplate<String, Long> redisTemplate;
 
 
     @GetMapping
     public void test(){
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"static";
         System.out.println(path);
-
+        redisTemplate.opsForValue().setIfAbsent("testRedisKey", 123L, 20, TimeUnit.SECONDS);
         TestUser testUser = TestUser.builder().id(1L).name("testName").build();
-        for(int i=0; i<100; i++){
+        for(int i=0; i<10; i++){
             int i1 = RandomUtil.randomInt(1, 10);
             HashMap<String, Object> stringIntegerHashMap = new HashMap<>();
             stringIntegerHashMap.put("count", i);
-            redissonTemplate.sendWithDelay("test", testUser, stringIntegerHashMap,i1*1000);
+            redissonTemplate.sendWithDelay("testRedissonQueue", testUser, stringIntegerHashMap,i1*1000);
         }
-
-
     }
 
     @GetMapping("/testuser")

@@ -1,5 +1,5 @@
 server:
-  port: 8189
+  port: 8090
 #  tomcat:
 #    max-swallow-size: -1
 #    connection-timeout: 10000

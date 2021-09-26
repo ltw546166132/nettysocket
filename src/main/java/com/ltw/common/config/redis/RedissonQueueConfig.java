@@ -19,7 +19,7 @@ import java.util.UUID;
 public class RedissonQueueConfig {
     @Bean
     public RedissonQueue redissonQueue() {
-        return new RedissonQueue("test", true, null, messageConverter());
+        return new RedissonQueue("testRedissonQueue", true, null, messageConverter());
     }
 
     @Bean("myMessageConverter")
@@ -42,7 +42,7 @@ public class RedissonQueueConfig {
         };
     }
 
-    @RedissonListener(queues = "test", messageConverter = "myMessageConverter")
+    @RedissonListener(queues = "testRedissonQueue", messageConverter = "myMessageConverter")
     public void handler(@Header(value = RedissonHeaders.MESSAGE_ID, required = false) String messageId,
                         @Header(RedissonHeaders.DELIVERY_QUEUE_NAME) String queue,
                         @Header(RedissonHeaders.SEND_TIMESTAMP) long sendTimestamp,
