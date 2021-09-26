@@ -1,4 +1,4 @@
-package com.ltw.chat;
+package com.ltw.test.chat;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;

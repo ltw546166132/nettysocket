@@ -1,11 +1,9 @@
-package com.ltw.nio;
+package com.ltw.test.nio;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.nio.channels.FileChannel;
 
 public class NioTest {

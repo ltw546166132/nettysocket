@@ -198,6 +198,13 @@ netty:
   maxThreads: 1024
   # 数据包的最大长度
   max_frame_length: 65535
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: nettysocket #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
 ycdevice:
   #校验crc true:校验 false：不校验
   checkCrc: false
