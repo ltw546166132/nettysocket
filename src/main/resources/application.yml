@@ -169,7 +169,8 @@ spring:
 #mybatis plus 设置
 mybatis-plus:
   mapper-locations:
-    - classpath:mapper/*Mapper.xml
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
   global-config:
     # 关闭MP3.0自带的banner
     banner: false

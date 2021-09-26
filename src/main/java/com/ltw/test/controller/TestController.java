@@ -5,6 +5,8 @@ import com.ltw.DelayQueueManager;
 import com.ltw.test.entity.TestUser;
 import com.ltw.test.utils.RedisDelayQueueUtil;
 import com.riven.redisson.config.RedissonTemplate;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+@Api(value = "测试Controller")
 @RestController
 @RequestMapping("/test")
 public class TestController {
@@ -28,6 +31,7 @@ public class TestController {
     private RedisTemplate<String, Long> redisTemplate;
 
 
+    @ApiOperation(value = "testController")
     @GetMapping
     public void test(){
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"static";
