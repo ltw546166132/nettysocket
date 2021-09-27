@@ -2,7 +2,7 @@ package com.ltw.device.standard;
 
 import cn.hutool.core.thread.GlobalThreadPool;
 import com.ltw.device.vo.YCDateVo;
-import com.ltw.utils.RedisUtil;
+import com.ltw.common.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

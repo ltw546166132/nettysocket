@@ -1,7 +1,7 @@
 package com.ltw.device;
 
 import com.ltw.device.event.DeviceDateEvent;
-import com.ltw.utils.SpringUtils;
+import com.ltw.common.utils.SpringUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

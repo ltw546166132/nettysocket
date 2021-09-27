@@ -1,6 +1,6 @@
 package com.ltw.common.component;
 
-import com.ltw.utils.JwtTokenUtil;
+import com.ltw.common.utils.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

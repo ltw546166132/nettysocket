@@ -5,10 +5,10 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.thread.GlobalThreadPool;
 import cn.hutool.core.util.IdcardUtil;
 import com.alibaba.fastjson.JSON;
-import com.ltw.test.config.MyConfig;
-import com.ltw.test.config.MyLog;
-import com.ltw.test.entity.TestUser;
-import com.ltw.test.enums.TestFunctionEnums;
+import com.ltw.module.test.config.MyConfig;
+import com.ltw.module.test.config.MyLog;
+import com.ltw.module.test.entity.TestUser;
+import com.ltw.module.test.enums.TestFunctionEnums;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

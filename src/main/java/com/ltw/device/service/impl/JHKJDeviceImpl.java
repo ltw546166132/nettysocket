@@ -13,7 +13,7 @@ import com.ltw.device.vo.ExceptionData;
 import com.ltw.device.vo.RealData;
 import com.ltw.device.vo.WareInfo;
 import com.ltw.device.vo.YCDateVo;
-import com.ltw.utils.RedisUtil;
+import com.ltw.common.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

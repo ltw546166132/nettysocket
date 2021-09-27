@@ -1,7 +1,7 @@
 package com.ltw.common.config.security;
 
 import com.ltw.common.component.*;
-import com.ltw.utils.JwtTokenUtil;
+import com.ltw.common.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
