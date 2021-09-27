@@ -1,9 +1,12 @@
 package com.ltw.module.test.controller;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.ltw.DelayQueueManager;
 import com.ltw.common.api.CommonResult;
+import com.ltw.module.test.entity.Org;
 import com.ltw.module.test.entity.TestUser;
+import com.ltw.module.test.service.OrgService;
 import com.ltw.module.test.utils.RedisDelayQueueUtil;
 import com.riven.redisson.config.RedissonTemplate;
 import io.swagger.annotations.Api;
@@ -31,6 +34,8 @@ public class TestController {
     private RedissonTemplate redissonTemplate;
     @Resource
     private RedisTemplate<String, Long> redisTemplate;
+    @Autowired
+    private OrgService orgService;
 
 
     @ApiOperation(value = "testController")
@@ -62,7 +67,10 @@ public class TestController {
 
     @PostMapping("addorg")
     public CommonResult<Boolean> addorg(){
-
-        return null;
+        Org org = new Org();
+        org.setParentId(0L);
+        org.setOrgName("testOrg-"+IdUtil.simpleUUID());
+        boolean save = orgService.save(org);
+        return CommonResult.success(save);
     }
 }
