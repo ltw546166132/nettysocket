@@ -28,9 +28,7 @@ public class Org extends BaseEntity {
      */
     private Long parentId;
 
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    private Integer ord;
 
     @Override
     public boolean equals(Object that) {
@@ -76,7 +74,6 @@ public class Org extends BaseEntity {
         sb.append(", orgName=").append(orgName);
         sb.append(", companyId=").append(companyId);
         sb.append(", parentId=").append(parentId);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }

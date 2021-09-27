@@ -1,5 +1,6 @@
 package com.ltw.module.test.controller;
 
+import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.ltw.DelayQueueManager;
@@ -14,12 +15,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Api(value = "测试Controller")
@@ -60,15 +60,15 @@ public class TestController {
     }
 
     @GetMapping("/orgtree")
-    public CommonResult<Boolean> orgtree(){
-
-        return null;
+    public CommonResult<List<Tree<Long>>> orgtree(){
+        List<Tree<Long>> tree = orgService.tree();
+        return CommonResult.success(tree);
     }
 
-    @PostMapping("addorg")
-    public CommonResult<Boolean> addorg(){
+    @GetMapping("/addorg")
+    public CommonResult<Boolean> addorg(@RequestParam("parentId") Long parentId){
         Org org = new Org();
-        org.setParentId(0L);
+        org.setParentId(parentId);
         org.setOrgName("testOrg-"+IdUtil.simpleUUID());
         boolean save = orgService.save(org);
         return CommonResult.success(save);
