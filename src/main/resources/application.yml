@@ -57,6 +57,19 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  rabbitmq:
+    host: 47.103.106.32
+    port: 5672
+    virtual-host: /test
+    username: test
+    password: hlyd3.141592654
+  data:
+    mongodb:
+      host: 47.103.106.32
+      port: 27017
+      database: mall
+#      username: admin
+#      password: hlyd3.141592654
   jpa:
     open-in-view: false
   activiti:
@@ -143,9 +156,6 @@ spring:
   #redis 配置
   redis:
     database: 0
-    #    host: 192.168.0.141
-    #    port: 8871
-    #    password: zhicheng1234
     host: 47.103.106.32
     port: 6379
     #    host: 192.168.226.129
