@@ -2,6 +2,9 @@ package com.ltw.module.test.enums;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 public enum QueueEnum {
     /**
@@ -30,5 +33,18 @@ public enum QueueEnum {
         this.exchange = exchange;
         this.name = name;
         this.routeKey = routeKey;
+    }
+
+    private static Map<String, QueueEnum> map = new HashMap<>();
+
+    public static String getDesByCode(String code) {
+        if(contains(code)) {
+            return map.get(code).getName();
+        }
+        return "";
+    }
+
+    public static boolean contains(String code) {
+        return map.containsKey(code);
     }
 }

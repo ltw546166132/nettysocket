@@ -1,20 +1,34 @@
 package com.ltw.module.test.component;
 
+import cn.hutool.core.net.NetUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.system.SystemUtil;
+import cn.hutool.system.UserInfo;
+import com.ltw.module.test.entity.Org;
 import com.ltw.module.test.enums.QueueEnum;
+import com.ltw.module.test.service.OrgService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class CancelOrderSender {
     private static Logger LOGGER = LoggerFactory.getLogger(CancelOrderSender.class);
     @Autowired
     private AmqpTemplate amqpTemplate;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private OrgService orgService;
 
     public void sendMessage(Long orderId,final long delayTimes){
         //给延迟队列发送消息
@@ -27,5 +41,11 @@ public class CancelOrderSender {
             }
         });
         LOGGER.info("send delay message orderId:{}",orderId);
+    }
+
+    public void sendMessageFanout(List<Org> list){
+        //给延迟队列发送消息
+        rabbitTemplate.convertAndSend("radio.fanout","", list, new CorrelationData(IdUtil.createSnowflake(1L, 1L).nextIdStr()));
+        LOGGER.info("send delay message orderId:{}",list.size());
     }
 }

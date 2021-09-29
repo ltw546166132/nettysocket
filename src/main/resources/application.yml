@@ -63,6 +63,13 @@ spring:
     virtual-host: /test
     username: test
     password: hlyd3.141592654
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual
   data:
     mongodb:
       host: 47.103.106.32

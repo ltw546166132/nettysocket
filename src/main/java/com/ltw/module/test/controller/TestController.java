@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.ltw.DelayQueueManager;
 import com.ltw.common.api.CommonResult;
+import com.ltw.module.test.component.CancelOrderSender;
 import com.ltw.module.test.entity.Org;
 import com.ltw.module.test.entity.TestUser;
 import com.ltw.module.test.service.OrgService;
@@ -12,12 +13,16 @@ import com.ltw.module.test.utils.RedisDelayQueueUtil;
 import com.riven.redisson.config.RedissonTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 @Api(value = "测试Controller")
 @RestController
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
     @Autowired
     DelayQueueManager delayQueueManager;
@@ -36,7 +42,8 @@ public class TestController {
     private RedisTemplate<String, Long> redisTemplate;
     @Autowired
     private OrgService orgService;
-
+    @Autowired
+    private CancelOrderSender cancelOrderSender;
 
     @ApiOperation(value = "testController")
     @GetMapping
@@ -73,4 +80,18 @@ public class TestController {
         boolean save = orgService.save(org);
         return CommonResult.success(save);
     }
+
+    @GetMapping("/rabbitmq")
+    public void testRabbitMq(){
+        log.info("发送时间:  "+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        cancelOrderSender.sendMessage(1L, 3000);
+    }
+
+    @GetMapping("/fanout")
+    public void fanout(){
+        List<Org> list = orgService.list();
+        log.info("发送时间:  "+ LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        cancelOrderSender.sendMessageFanout(list);
+    }
+
 }
