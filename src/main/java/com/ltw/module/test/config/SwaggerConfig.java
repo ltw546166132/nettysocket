@@ -19,7 +19,7 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     @Override
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
-                .apiBasePackage("com.ltw.test")
+                .apiBasePackage("com.ltw.module.test")
                 .title("nettysocket-test系统")
                 .description("系统测试")
                 .contactName("nettysocket")
