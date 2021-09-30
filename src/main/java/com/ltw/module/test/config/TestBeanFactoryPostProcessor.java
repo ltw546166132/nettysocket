@@ -16,6 +16,8 @@ public class TestBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
             if("myLog".equals(name)){
                 BeanDefinition beanDefinition = beanFactory.getBeanDefinition(name);
                 beanDefinition.setLazyInit(true);
+                String beanClassName = beanDefinition.getBeanClassName();
+                System.out.println(beanClassName);
             }
         }
     }

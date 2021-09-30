@@ -77,6 +77,16 @@ spring:
       database: mall
 #      username: admin
 #      password: hlyd3.141592654
+    elasticsearch:
+      repositories:
+        enabled: true
+      client:
+        reactive:
+          endpoints: 47.103.106.32:9200
+  elasticsearch:
+    rest:
+      uris: 47.103.106.32:9200
+
   jpa:
     open-in-view: false
   activiti:

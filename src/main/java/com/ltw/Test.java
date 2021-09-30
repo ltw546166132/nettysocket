@@ -4,13 +4,13 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.thread.GlobalThreadPool;
 import cn.hutool.core.util.IdcardUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.JSON;
-import com.ltw.module.test.config.MyConfig;
+import com.ltw.module.test.MyConfig;
 import com.ltw.module.test.config.MyLog;
 import com.ltw.module.test.entity.TestUser;
 import com.ltw.module.test.enums.TestFunctionEnums;
-import com.ltw.module.test.service.OrgService;
+import com.ltw.module.test.spring.UserService;
+import com.ltw.module.test.spring.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -57,8 +57,8 @@ public class Test {
 
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
-        MyLog bean = context.getBean(MyLog.class);
-        log.info(JSON.toJSONString(bean));
+        UserService userService = context.getBean(UserServiceImpl.class);
+        log.info(JSON.toJSONString(userService));
 
         TestUser build = TestUser.builder().idCard("430102201003072712").build();
         TestUser build1 = TestUser.builder().idCard("430102199003070936").build();
