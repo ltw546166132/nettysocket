@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService{
     UserServiceImpl(OrderService orderService, OrderService orderService2){
         System.out.println(orderService+"------"+orderService2);
     }
+
+    @Override
+    public void testAspect(){
+
+    }
 }

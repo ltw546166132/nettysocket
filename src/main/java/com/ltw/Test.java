@@ -6,14 +6,12 @@ import cn.hutool.core.thread.GlobalThreadPool;
 import cn.hutool.core.util.IdcardUtil;
 import com.alibaba.fastjson.JSON;
 import com.ltw.module.test.MyConfig;
-import com.ltw.module.test.config.MyLog;
 import com.ltw.module.test.entity.TestUser;
 import com.ltw.module.test.enums.TestFunctionEnums;
 import com.ltw.module.test.spring.UserService;
 import com.ltw.module.test.spring.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.DelayQueue;
@@ -24,7 +22,7 @@ public class Test {
     static ExecutorService executor = GlobalThreadPool.getExecutor();
     private static DelayQueue delayQueue  = new DelayQueue();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 //        LinkedList<Consumer> testConsumers = new LinkedList<>();
 //        for(int i = 0; i<5; i++){
 //            TestConsumer testConsumer = new TestConsumer(RandomUtil.randomString(5));
@@ -55,10 +53,10 @@ public class Test {
 //        sort.forEach(testUser -> System.out.println(testUser.getId()));
 
 
-
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
-        UserService userService = context.getBean(UserServiceImpl.class);
+        UserService userService = context.getBean(UserService.class);
         log.info(JSON.toJSONString(userService));
+        userService.testAspect();
 
         TestUser build = TestUser.builder().idCard("430102201003072712").build();
         TestUser build1 = TestUser.builder().idCard("430102199003070936").build();
@@ -69,7 +67,6 @@ public class Test {
         list.add(build);
         Integer num = (Integer) TestFunctionEnums.AGE20.getGetCountNum().apply(list);
         System.out.println(num);
-
 
 
         DateTime birthDate = IdcardUtil.getBirthDate("340621199812264428");
