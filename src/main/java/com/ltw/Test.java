@@ -56,7 +56,14 @@ public class Test {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
         UserService userService = context.getBean(UserService.class);
         log.info(JSON.toJSONString(userService));
-        userService.testAspect();
+
+
+        try {
+            userService.testAspect();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
 
         TestUser build = TestUser.builder().idCard("430102201003072712").build();
         TestUser build1 = TestUser.builder().idCard("430102199003070936").build();
