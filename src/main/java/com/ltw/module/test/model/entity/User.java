@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ltw.common.model.domain.BaseEntity;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @TableName(value = "user")
@@ -15,6 +18,7 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private String account;
+    private LocalDateTime birthday;
 
 
     @TableField(exist = false)
