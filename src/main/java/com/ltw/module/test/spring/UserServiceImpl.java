@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 
-@Service
 public class UserServiceImpl implements UserService{
     @Autowired
 //    @Qualifier("orderService")

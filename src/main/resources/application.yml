@@ -257,4 +257,5 @@ secure:
       - /admin/logout
       - /minio/upload
       - /test/**
+      - /auth/**
 
