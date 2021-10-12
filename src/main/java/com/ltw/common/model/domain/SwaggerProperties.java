@@ -1,4 +1,4 @@
-package com.ltw.common.domain;
+package com.ltw.common.model.domain;
 
 import lombok.Builder;
 import lombok.Data;

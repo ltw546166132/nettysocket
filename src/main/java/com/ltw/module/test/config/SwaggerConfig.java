@@ -1,9 +1,8 @@
 package com.ltw.module.test.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import com.ltw.common.config.swagger.BaseSwaggerConfig;
-import com.ltw.common.domain.SwaggerProperties;
+import com.ltw.common.model.domain.SwaggerProperties;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 

@@ -1,9 +1,8 @@
 package com.ltw.module.test.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import com.ltw.common.domain.BaseEntity;
+import com.ltw.common.model.domain.BaseEntity;
 import lombok.Data;
 
 /**
