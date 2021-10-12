@@ -1,6 +1,6 @@
 package com.ltw.common.config.swagger;
 
-import com.ltw.common.model.domain.SwaggerProperties;
+import com.ltw.common.model.bean.SwaggerProperties;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

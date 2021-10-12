@@ -1,4 +1,4 @@
-package com.ltw.module.test.entity;
+package com.ltw.module.test.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 

@@ -1,6 +1,6 @@
 package com.ltw.module.test.component;
 
-import com.ltw.module.test.entity.Org;
+import com.ltw.module.test.model.entity.Org;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

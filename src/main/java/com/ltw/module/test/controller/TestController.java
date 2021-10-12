@@ -6,8 +6,8 @@ import cn.hutool.core.util.RandomUtil;
 import com.ltw.DelayQueueManager;
 import com.ltw.common.api.CommonResult;
 import com.ltw.module.test.component.CancelOrderSender;
-import com.ltw.module.test.entity.Org;
-import com.ltw.module.test.entity.TestUser;
+import com.ltw.module.test.model.entity.Org;
+import com.ltw.module.test.model.entity.TestUser;
 import com.ltw.module.test.service.OrgService;
 import com.ltw.module.test.utils.RedisDelayQueueUtil;
 import com.riven.redisson.config.RedissonTemplate;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;

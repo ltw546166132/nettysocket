@@ -1,6 +1,6 @@
 package com.ltw.module.test.enums;
 
-import com.ltw.module.test.entity.TestUser;
+import com.ltw.module.test.model.entity.TestUser;
 import com.ltw.module.test.utils.IdCardUtil;
 import lombok.Getter;
 import java.util.List;

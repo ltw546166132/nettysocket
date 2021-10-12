@@ -1,7 +1,7 @@
 package com.ltw.common.config.redis;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ltw.module.test.entity.TestUser;
+import com.ltw.module.test.model.entity.TestUser;
 import com.riven.redisson.annotation.EnableRedisson;
 import com.riven.redisson.annotation.RedissonListener;
 import com.riven.redisson.config.RedissonQueue;

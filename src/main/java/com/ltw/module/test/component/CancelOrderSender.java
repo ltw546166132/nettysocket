@@ -1,7 +1,7 @@
 package com.ltw.module.test.component;
 
 import cn.hutool.core.util.IdUtil;
-import com.ltw.module.test.entity.Org;
+import com.ltw.module.test.model.entity.Org;
 import com.ltw.module.test.enums.QueueEnum;
 import com.ltw.module.test.service.OrgService;
 import org.slf4j.Logger;

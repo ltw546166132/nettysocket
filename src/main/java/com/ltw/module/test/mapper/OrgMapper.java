@@ -1,6 +1,6 @@
 package com.ltw.module.test.mapper;
 
-import com.ltw.module.test.entity.Org;
+import com.ltw.module.test.model.entity.Org;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

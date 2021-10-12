@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ltw.module.test.mapper.OrgMapper">
 
-    <resultMap id="BaseResultMap" type="com.ltw.module.test.entity.Org">
+    <resultMap id="BaseResultMap" type="com.ltw.module.test.model.entity.Org">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="orgName" column="org_name" jdbcType="VARCHAR"/>
             <result property="companyId" column="company_id" jdbcType="BIGINT"/>

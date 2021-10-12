@@ -1,8 +1,7 @@
 package com.ltw.module.test.spring;
 
-import com.ltw.module.test.entity.TestUser;
+import com.ltw.module.test.model.entity.TestUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;

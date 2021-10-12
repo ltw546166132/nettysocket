@@ -1,12 +1,11 @@
 package com.ltw.module.test.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ltw.module.test.entity.Org;
+import com.ltw.module.test.model.entity.Org;
 import com.ltw.module.test.mapper.OrgMapper;
 import com.ltw.module.test.service.OrgService;
 import org.springframework.stereotype.Service;
