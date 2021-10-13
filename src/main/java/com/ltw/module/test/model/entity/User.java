@@ -14,7 +14,6 @@ import java.util.List;
 @TableName(value = "user")
 @Data
 public class User extends BaseEntity {
-    private Long id;
     private String username;
     private String password;
     private String account;

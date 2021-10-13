@@ -7,19 +7,31 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltw.common.exception.ApiException;
 import com.ltw.module.test.mapper.UserMapper;
 import com.ltw.module.test.model.bo.UserAddBO;
+import com.ltw.module.test.model.dto.UserDTO;
 import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.service.UserService;
 import net.bytebuddy.implementation.bytecode.Throw;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService, UserDetailsService {
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+        User user = getOne(new LambdaQueryWrapper<User>().eq(User::getAccount, account));
+        UserDTO userDTO = new UserDTO();
+        BeanUtil.copyProperties(user, userDTO);
+        return userDTO;
+    }
 
     @Override
     public User addUser(UserAddBO bo){
@@ -36,5 +48,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return user;
         }
         return null;
+    }
+
+    @Override
+    public User getUserByAccount(String account) {
+        return getOne(new LambdaQueryWrapper<User>().eq(User::getAccount, account));
     }
 }
