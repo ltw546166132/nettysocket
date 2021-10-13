@@ -46,9 +46,9 @@ public class JacksonConfig {
         return objectMapper;
     }
 
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
-        return jacksonObjectMapperBuilder ->
-                jacksonObjectMapperBuilder.timeZone(TimeZone.getTimeZone("GMT+8"));
-    }
+//    @Bean
+//    public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
+//        return jacksonObjectMapperBuilder ->
+//                jacksonObjectMapperBuilder.timeZone(TimeZone.getTimeZone("GMT+8"));
+//    }
 }
