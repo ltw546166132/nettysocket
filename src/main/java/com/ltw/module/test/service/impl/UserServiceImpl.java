@@ -20,18 +20,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService, UserDetailsService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
     private PasswordEncoder passwordEncoder;
-
-    @Override
-    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        User user = getOne(new LambdaQueryWrapper<User>().eq(User::getAccount, account));
-        UserDTO userDTO = new UserDTO();
-        BeanUtil.copyProperties(user, userDTO);
-        return userDTO;
-    }
 
     @Override
     public User addUser(UserAddBO bo){

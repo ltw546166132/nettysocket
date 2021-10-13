@@ -1,7 +1,6 @@
 package com.ltw.module.test.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ltw.module.test.model.dto.UserDTO;
 import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.service.AuthService;
@@ -20,10 +19,14 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     @Autowired
     private UserService userService;
 
+
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
         User user = userService.getUserByAccount(account);
         UserDTO userDTO = new UserDTO();
+        if(user == null){
+            throw new UsernameNotFoundException("用户存在");
+        }
         BeanUtil.copyProperties(user, userDTO);
         return userDTO;
     }

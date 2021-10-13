@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.ltw.common.api.CommonResult;
 import com.ltw.module.test.model.bo.UserAddBO;
+import com.ltw.module.test.model.bo.UserLoginBO;
 import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.service.AuthService;
 import com.ltw.module.test.service.UserService;
@@ -37,7 +38,7 @@ public class SecurityController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(UserLoginBO bo){
         return "login";
     }
 

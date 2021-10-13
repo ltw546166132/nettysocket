@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.ltw.common.model.domain.BaseEntity;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +18,7 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private String account;
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
 
     @TableField(exist = false)
