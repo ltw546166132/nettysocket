@@ -58,7 +58,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   rabbitmq:
-    host: 47.103.106.32
+    host: 1.117.52.207
     port: 5672
     virtual-host: /test
     username: test
@@ -72,7 +72,7 @@ spring:
         acknowledge-mode: manual
   data:
     mongodb:
-      host: 47.103.106.32
+      host: 1.117.52.207
       port: 27017
       database: mall
 #      username: admin
@@ -82,10 +82,10 @@ spring:
         enabled: true
       client:
         reactive:
-          endpoints: 47.103.106.32:9200
+          endpoints: 1.117.52.207:9200
   elasticsearch:
     rest:
-      uris: 47.103.106.32:9200
+      uris: 1.117.52.207:9200
 
   jpa:
     open-in-view: false
@@ -155,7 +155,7 @@ spring:
         connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
       datasource:
         master:
-          url: jdbc:mysql://47.103.106.32:3306/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          url: jdbc:mysql://1.117.52.207:3306/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
           username: root
           password: hlyd3.141592654
 #          url: jdbc:mysql://192.168.20.107:32497/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
@@ -173,7 +173,7 @@ spring:
   #redis 配置
   redis:
     database: 0
-    host: 47.103.106.32
+    host: 1.117.52.207
     port: 6379
     #    host: 192.168.226.129
     #    port: 6379
@@ -187,7 +187,7 @@ spring:
     timeout: 2000
   smart-redisson:
     server-type: single
-    server-address: 47.103.106.32:6379
+    server-address: 1.117.52.207:6379
 #    server-type: cluster
 #    server-address: localhost:7000,localhost:7001,localhost:7002
 #    password: 123456
