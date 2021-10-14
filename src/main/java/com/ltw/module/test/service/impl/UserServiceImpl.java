@@ -7,13 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ltw.common.exception.ApiException;
 import com.ltw.module.test.mapper.UserMapper;
 import com.ltw.module.test.model.bo.UserAddBO;
-import com.ltw.module.test.model.dto.UserDTO;
 import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.service.UserService;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

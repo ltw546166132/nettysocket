@@ -27,7 +27,7 @@ public class SecurityController {
     @Autowired
     private AuthService authService;
 
-    @GetMapping("/mobil")
+    @GetMapping("/mobile")
     public String query(){
         return "mobile";
     }
@@ -37,9 +37,10 @@ public class SecurityController {
         return "salary";
     }
 
-    @GetMapping("/login")
-    public String login(UserLoginBO bo){
-        return "login";
+    @PostMapping("/login")
+    public String login(@RequestBody UserLoginBO bo){
+        String token = authService.login(bo.getAccount(), bo.getPassword());
+        return token;
     }
 
     @PostMapping("/user")

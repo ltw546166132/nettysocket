@@ -1,34 +1,66 @@
 package com.ltw.module.test.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.ltw.module.test.model.dto.UserDTO;
+import com.ltw.common.utils.JwtTokenUtil;
+import com.ltw.module.test.model.dto.LoginUser;
 import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.service.AuthService;
 import com.ltw.module.test.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
-public class AuthServiceImpl implements AuthService, UserDetailsService {
+public class AuthServiceImpl implements AuthService {
     private final String demoUserName = "admin";
     private final String demoPassword = "admin";
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private UserService userService;
-
 
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
         User user = userService.getUserByAccount(account);
-        UserDTO userDTO = new UserDTO();
         if(user == null){
-            throw new UsernameNotFoundException("用户存在");
+            throw new UsernameNotFoundException("用户不存在");
         }
-        BeanUtil.copyProperties(user, userDTO);
-        return userDTO;
+        LoginUser loginUser = new LoginUser(user);
+//        BeanUtil.copyProperties(user, loginUser);
+        return loginUser;
+    }
+
+    @Override
+    public String login(String username, String password) {
+        String token = null;
+        //密码需要客户端加密后传递
+        try {
+            UserDetails userDetails = loadUserByUsername(username);
+            if(!passwordEncoder.matches(password,userDetails.getPassword())){
+                throw new BadCredentialsException("密码不正确");
+            }
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            token = jwtTokenUtil.generateToken(userDetails);
+        } catch (AuthenticationException e) {
+            log.warn("登录异常:{}", e.getMessage());
+        }
+        return token;
+    }
+
+    @Override
+    public String refreshToken(String token) {
+        return jwtTokenUtil.refreshHeadToken(token);
     }
 
 }
