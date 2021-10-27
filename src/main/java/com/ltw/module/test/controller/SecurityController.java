@@ -8,6 +8,7 @@ import com.ltw.module.test.model.bo.UserLoginBO;
 import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.service.AuthService;
 import com.ltw.module.test.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -37,12 +38,14 @@ public class SecurityController {
         return "salary";
     }
 
+    @ApiOperation("登录用户")
     @PostMapping("/login")
     public String login(@RequestBody UserLoginBO bo){
         String token = authService.login(bo.getAccount(), bo.getPassword());
         return token;
     }
 
+    @ApiOperation("添加用户")
     @PostMapping("/user")
     public CommonResult<Boolean> addUser(@RequestBody @Validated UserAddBO bo){
 //        log.info(DateTime.of(bo.getBirthday()).toString("yyyy-MM-dd HH:mm:ss"));

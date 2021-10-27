@@ -1,6 +1,7 @@
 package com.ltw.device.common.constans;
 
-import com.ltw.netty.pojo.SocketSession;
+import org.yeauty.pojo.Session;
+
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,7 +12,7 @@ public class ClimateDeviceSocketSession {
     /**
      * key为channelId
      */
-    public static ConcurrentHashMap<String, SocketSession> sessionMap = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, Session> sessionMap = new ConcurrentHashMap<>();
     /**
      * key为projectId   value为channelId
      */
