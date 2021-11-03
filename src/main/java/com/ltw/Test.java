@@ -8,13 +8,18 @@ import com.alibaba.fastjson.JSON;
 import com.ltw.module.test.MyConfig;
 import com.ltw.module.test.model.entity.TestUser;
 import com.ltw.module.test.enums.TestFunctionEnums;
+import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.spring.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class Test {
@@ -22,6 +27,7 @@ public class Test {
     private static DelayQueue delayQueue  = new DelayQueue();
 
     public static void main(String[] args) {
+        log.info("------>"+new Random().nextInt(555)+"");
 //        LinkedList<Consumer> testConsumers = new LinkedList<>();
 //        for(int i = 0; i<5; i++){
 //            TestConsumer testConsumer = new TestConsumer(RandomUtil.randomString(5));
@@ -52,25 +58,31 @@ public class Test {
 //        sort.forEach(testUser -> System.out.println(testUser.getId()));
 
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
-        UserService userService = context.getBean(UserService.class);
-        log.info(JSON.toJSONString(userService));
+//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
+//        UserService userService = context.getBean(UserService.class);
+//        log.info(JSON.toJSONString(userService));
 
 
-        try {
-            userService.testAspect();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            userService.testAspect();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
 
 
-        TestUser build = TestUser.builder().idCard("430102201003072712").build();
-        TestUser build1 = TestUser.builder().idCard("430102199003070936").build();
-        TestUser build2 = TestUser.builder().idCard("430102199003075390").build();
-        List<TestUser> list = CollectionUtil.list(false);
-        list.add(build2);
-        list.add(build1);
+        TestUser build = TestUser.builder().id(1L).idCard("430102201003072712").build();
+        TestUser build1 = TestUser.builder().id(2L).idCard("430102199003070936").build();
+        TestUser build2 = TestUser.builder().id(3L).idCard("430102199003075390").build();
+        List<TestUser> list = CollectionUtil.list(true);
         list.add(build);
+        list.add(build1);
+        list.add(build2);
+//        List<TestUser> collect = list.stream().sorted((o1, o2) -> o2.getId().compareTo(o1.getId())).collect(Collectors.toList());
+
+        List<TestUser> collect1 = list.stream().sorted(Comparator.comparing(TestUser::getId).reversed()).collect(Collectors.toList());
+        System.out.println(list);
+
+
         Integer num = (Integer) TestFunctionEnums.AGE20.getGetCountNum().apply(list);
         System.out.println(num);
 
