@@ -6,7 +6,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.yeauty.annotation.EnableWebSocket;
 
 @EnableAspectJAutoProxy(exposeProxy = true)
-@EnableWebSocket
 @SpringBootApplication
 public class SpringBootMainClass {
     public static void main(String[] args) {

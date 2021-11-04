@@ -31,7 +31,7 @@ public class ChatServer {
                         }
                     });
             System.out.println("Srever 启动");
-            ChannelFuture sync = serverBootstrap.bind(2404).sync();
+            ChannelFuture sync = serverBootstrap.bind(8808).sync();
             //对关闭通道进行监听
             sync.channel().closeFuture().sync();
         }finally {
