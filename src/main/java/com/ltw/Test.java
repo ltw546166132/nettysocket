@@ -1,5 +1,6 @@
 package com.ltw;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.thread.GlobalThreadPool;
@@ -93,6 +94,8 @@ public class Test {
         System.out.println(birthDate.dayOfMonth());
         Date date = birthDate.toJdkDate();
         System.out.println(date);
+
+
     }
 
 }

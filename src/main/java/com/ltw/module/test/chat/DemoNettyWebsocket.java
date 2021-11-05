@@ -47,7 +47,6 @@ public class DemoNettyWebsocket {
 
     @OnMessage
     public void onMessage(Session socketSession, Byte[] message) {
-        log.info(m);
         Channel channel = socketSession.channel();
         String channelId = channel.id().asShortText();
         if (StrUtil.isBlank(channelId)) {
