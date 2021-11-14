@@ -1,50 +1,29 @@
 package com.ltw.module.test.model.dto;
 
-import com.ltw.module.test.model.entity.User;
+import com.ltw.module.test.model.query.UserVO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
-public class LoginUser implements UserDetails {
+public class LoginUser extends User {
 
-    private User target;
+    private UserVO target;
 
-    public LoginUser(User user){
-        target = user;
+    public LoginUser(String username, String password, Collection<? extends GrantedAuthority> authorities, UserVO target) {
+        super(username, password, authorities);
+        this.target = target;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public UserVO getTarget() {
+        return target;
     }
 
-    @Override
-    public String getPassword() {
-        return target.getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return target.getAccount();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
+    public void setTarget(UserVO target) {
+        this.target = target;
     }
 }

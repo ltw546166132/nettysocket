@@ -6,6 +6,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.ltw.DelayQueueManager;
 import com.ltw.common.api.CommonResult;
 import com.ltw.module.test.component.CancelOrderSender;
+import com.ltw.module.test.model.dto.LoginUser;
 import com.ltw.module.test.model.entity.Org;
 import com.ltw.module.test.model.entity.TestUser;
 import com.ltw.module.test.service.OrgService;
@@ -17,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -61,6 +64,7 @@ public class TestController {
 
     @GetMapping("/testuser")
     public ResponseEntity<TestUser> testuser(){
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         TestUser testUser = TestUser.builder().id(123L).idCard("xfvdfv").build();
         return ResponseEntity.ok(testUser);
     }

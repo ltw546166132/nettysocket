@@ -12,6 +12,5 @@ import java.util.List;
 public class Role extends BaseEntity {
     private Long id;
     private String rolename;
-    @TableField(exist = false)
-    private List<Resource> resourceBeanList;
+
 }

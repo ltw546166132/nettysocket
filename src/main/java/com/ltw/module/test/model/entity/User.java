@@ -19,14 +19,4 @@ public class User extends BaseEntity {
     private String password;
     private String account;
     private LocalDate birthday;
-
-
-    @TableField(exist = false)
-    private List<Role> roleBeanList = new ArrayList<>();
-    @TableField(exist = false)
-    private List<Resource> resourceBeanList = new ArrayList<>();
-
-    public Boolean havePermission(String resource){
-        return this.resourceBeanList.stream().filter(resourceBean -> resourceBean.getResourcename().equals(resource)).count()>0;
-    }
 }
