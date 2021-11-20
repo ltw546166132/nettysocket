@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
         UserVO userVO = new UserVO();
         BeanUtil.copyProperties(user, userVO);
         List<Permission> allUserPermission = permissionMapper.getAllUserPermission(userVO.getId());
-        List<String> collect = allUserPermission.stream().map(permission -> permission.getPermissionUrl()).collect(Collectors.toList());
+        List<String> collect = allUserPermission.stream().map(permission -> permission.getCode()).collect(Collectors.toList());
         String[] objects = (String[]) collect.toArray();
         UserDetails userDetails = LoginUser.withUsername(userVO.getUsername()).password(userVO.getPassword()).authorities(objects).build();
         return userDetails;
