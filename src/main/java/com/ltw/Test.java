@@ -5,6 +5,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.thread.GlobalThreadPool;
 import cn.hutool.core.util.IdcardUtil;
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.ltw.module.test.MyConfig;
 import com.ltw.module.test.model.entity.TestUser;
@@ -14,12 +16,11 @@ import com.ltw.module.test.spring.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.math.RoundingMode;
+import java.util.*;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,16 +30,16 @@ public class Test {
 
     public static void main(String[] args) {
         log.info("------>"+new Random().nextInt(555)+"");
-//        LinkedList<Consumer> testConsumers = new LinkedList<>();
-//        for(int i = 0; i<5; i++){
-//            TestConsumer testConsumer = new TestConsumer(RandomUtil.randomString(5));
-//            Consumer<String> consumer = testConsumer.getConsumer();
-//            testConsumers.add(consumer);
-//
-//        }
-//        for (Consumer consumer: testConsumers) {
-//            consumer.accept(RandomUtil.randomString(3));
-//        }
+        LinkedList<Consumer> testConsumers = new LinkedList<>();
+        for(int i = 0; i<5; i++){
+            TestConsumer testConsumer = new TestConsumer(RandomUtil.randomString(5));
+            Consumer<String> consumer = testConsumer.getConsumer();
+            testConsumers.add(consumer);
+
+        }
+        for (Consumer consumer: testConsumers) {
+            consumer.accept(RandomUtil.randomString(3));
+        }
 
 //        ArrayList<TestUser> testUsers = new ArrayList<>();
 //        for(int i=0;i<10;i++){
@@ -94,7 +95,14 @@ public class Test {
         System.out.println(birthDate.dayOfMonth());
         Date date = birthDate.toJdkDate();
         System.out.println(date);
+        String bb = "我${projectId}";
+        String format = String.format(bb, "${projectId}");
 
+        double v = RandomUtil.randomDouble(0.1, 1, 1, RoundingMode.HALF_UP);
+        System.out.println(v+"");
+        System.out.println(NumberUtil.add(v, 36.5));
+        int compare = NumberUtil.compare(NumberUtil.add(v, 36.5), 37.2);
+        System.out.println(compare);
     }
 
 }
