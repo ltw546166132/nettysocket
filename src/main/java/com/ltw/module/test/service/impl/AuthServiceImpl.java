@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class AuthServiceImpl implements AuthService {
     private final String demoUserName = "admin";
     private final String demoPassword = "admin";
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
