@@ -18,8 +18,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.math.RoundingMode;
 import java.util.*;
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -103,6 +102,29 @@ public class Test {
         System.out.println(NumberUtil.add(v, 36.5));
         int compare = NumberUtil.compare(NumberUtil.add(v, 36.5), 37.2);
         System.out.println(compare);
+
+
+        HashMap<String, BlockingQueue<String>> queueHashMap = new HashMap<>();
+        queueHashMap.put("1", new LinkedBlockingQueue<String>());
+        queueHashMap.put("2", new LinkedBlockingQueue<String>());
+        Set<Map.Entry<String, BlockingQueue<String>>> entries = queueHashMap.entrySet();
+        entries.forEach(stringBlockingQueueEntry -> {
+            BlockingQueue<String> value = stringBlockingQueueEntry.getValue();
+            CompletableFuture<Void> voidCompletableFuture = new CompletableFuture<Void>().runAsync(() -> {
+                while(true){
+                    try {
+                        String take = value.take();
+                        System.out.println(take);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        });
+        queueHashMap.get("1").offer("1");
+        queueHashMap.get("2").offer("2");
+
     }
 
 }

@@ -49,7 +49,7 @@ public class SecurityController {
     @PostMapping("/user")
     public CommonResult<Boolean> addUser(@RequestBody @Validated UserAddBO bo){
 //        log.info(DateTime.of(bo.getBirthday()).toString("yyyy-MM-dd HH:mm:ss"));
-        log.info(bo.getBirthday().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+//        log.info(bo.getBirthday().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         User user = userService.addUser(bo);
 
         if(ObjectUtil.isNotNull(user)){

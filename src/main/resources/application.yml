@@ -1,3 +1,5 @@
+redis:
+  host: 192.168.2.11
 server:
   port: 8090
 #  tomcat:
@@ -172,9 +174,12 @@ spring:
           #driver-class-name: com.mysql.cj.jdbc.Driver
   #redis 配置
   redis:
+    cluster:
+      nodes: ${redis.host}:6379,${redis.host}:6380,${redis.host}:6381,${redis.host}:6382,${redis.host}:6383,${redis.host}:6384
     database: 0
-    host: 1.117.52.207
+    host: ${redis.host}
     port: 6379
+    password:
     #    host: 192.168.226.129
     #    port: 6379
     lettuce:
@@ -186,11 +191,11 @@ spring:
       shutdown-timeout: 100ms
     timeout: 2000
   smart-redisson:
-    server-type: single
-    server-address: 1.117.52.207:6379
-#    server-type: cluster
-#    server-address: localhost:7000,localhost:7001,localhost:7002
-#    password: 123456
+#    server-type: single
+#    server-address: 1.117.52.207:6379
+    server-type: cluster
+    server-address: ${spring.redis.cluster.nodes}
+    password:
 
 
 #mybatis plus 设置
@@ -257,4 +262,5 @@ secure:
       - /admin/logout
       - /minio/upload
       - /auth/login
+      - /auth/user
 
