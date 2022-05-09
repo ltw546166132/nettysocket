@@ -15,10 +15,18 @@ import com.ltw.module.test.model.entity.User;
 import com.ltw.module.test.spring.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import sun.misc.BASE64Decoder;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -28,7 +36,7 @@ public class Test {
     private static DelayQueue delayQueue  = new DelayQueue();
 
     public static void main(String[] args) {
-        log.info("------>"+new Random().nextInt(555)+"");
+//        log.info("------>"+new Random().nextInt(555)+"");
         LinkedList<Consumer> testConsumers = new LinkedList<>();
         for(int i = 0; i<5; i++){
             TestConsumer testConsumer = new TestConsumer(RandomUtil.randomString(5));
@@ -103,27 +111,12 @@ public class Test {
         int compare = NumberUtil.compare(NumberUtil.add(v, 36.5), 37.2);
         System.out.println(compare);
 
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
 
-        HashMap<String, BlockingQueue<String>> queueHashMap = new HashMap<>();
-        queueHashMap.put("1", new LinkedBlockingQueue<String>());
-        queueHashMap.put("2", new LinkedBlockingQueue<String>());
-        Set<Map.Entry<String, BlockingQueue<String>>> entries = queueHashMap.entrySet();
-        entries.forEach(stringBlockingQueueEntry -> {
-            BlockingQueue<String> value = stringBlockingQueueEntry.getValue();
-            CompletableFuture<Void> voidCompletableFuture = new CompletableFuture<Void>().runAsync(() -> {
-                while(true){
-                    try {
-                        String take = value.take();
-                        System.out.println(take);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
 
-        });
-        queueHashMap.get("1").offer("1");
-        queueHashMap.get("2").offer("2");
+        String aaa = "data:image/jpg;base64,1111";
+        System.out.println(aaa.indexOf("base64,"));
+        System.out.println(aaa.substring(aaa.indexOf("base64,")+("base64,".length())));
 
     }
 
