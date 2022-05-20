@@ -1,5 +1,5 @@
 redis:
-  host: 192.168.2.11
+  host: 115.238.152.230
 server:
   port: 8090
 #  tomcat:
@@ -176,10 +176,10 @@ spring:
   redis:
     cluster:
       nodes: ${redis.host}:6379,${redis.host}:6380,${redis.host}:6381,${redis.host}:6382,${redis.host}:6383,${redis.host}:6384
-    database: 0
+    database: 57
     host: ${redis.host}
     port: 6379
-    password:
+    password: hang@sjg
     #    host: 192.168.226.129
     #    port: 6379
     lettuce:
@@ -191,11 +191,13 @@ spring:
       shutdown-timeout: 100ms
     timeout: 2000
   smart-redisson:
-#    server-type: single
-#    server-address: 1.117.52.207:6379
-    server-type: cluster
-    server-address: ${spring.redis.cluster.nodes}
-    password:
+    server-type: single
+    server-address: ${redis.host}:6379
+    database: 57
+    password: hang@sjg
+#    server-type: cluster
+#    server-address: ${spring.redis.cluster.nodes}
+#    password:
 
 
 #mybatis plus 设置

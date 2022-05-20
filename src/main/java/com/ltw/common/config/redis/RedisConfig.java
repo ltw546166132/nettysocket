@@ -87,35 +87,38 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return new RedisServiceImpl();
 	}
 
-//	@Bean
-//	public RedissonClient redissonClient() {
-//		Config config = new Config();
-//		config.useSingleServer()
-//				.setAddress("redis://" + host + ":" + port)
-//				.setDatabase(database);
-//		return Redisson.create(config);
-//	}
+	@Bean
+	public RedissonClient redissonClient() {
+		Config config = new Config();
+		config.useSingleServer()
+				.setAddress("redis://" + host + ":" + port)
+				.setDatabase(database);
+		if(StrUtil.isNotBlank(password)){
+			config.useSingleServer().setPassword(password);
+		}
+		return Redisson.create(config);
+	}
 
 	/**
 	 * 集群版配置
 	 * @return
 	 */
-	@Bean
-	public RedissonClient redissonClient() {
-		//redisson版本是3.5，集群的ip前面要加上“redis://”，不然会报错，3.2版本可不加
-		List<String> clusterNodes = new ArrayList<>();
-		for (int i = 0; i < nodes.size(); i++) {
-			clusterNodes.add("redis://" + nodes.get(i));
-		}
-		Config config = new Config();
-		// 添加集群地址
-		ClusterServersConfig clusterServersConfig = config.useClusterServers().addNodeAddress(clusterNodes.toArray(new String[clusterNodes.size()]));
-		// 设置密码
-		if(StrUtil.isNotBlank(password)){
-			clusterServersConfig.setPassword(password);
-		}
-		RedissonClient redissonClient = Redisson.create(config);
-		return redissonClient;
-	}
+//	@Bean
+//	public RedissonClient redissonClient() {
+//		//redisson版本是3.5，集群的ip前面要加上“redis://”，不然会报错，3.2版本可不加
+//		List<String> clusterNodes = new ArrayList<>();
+//		for (int i = 0; i < nodes.size(); i++) {
+//			clusterNodes.add("redis://" + nodes.get(i));
+//		}
+//		Config config = new Config();
+//		// 添加集群地址
+//		ClusterServersConfig clusterServersConfig = config.useClusterServers().addNodeAddress(clusterNodes.toArray(new String[clusterNodes.size()]));
+//		// 设置密码
+//		if(StrUtil.isNotBlank(password)){
+//			clusterServersConfig.setPassword(password);
+//		}
+//		RedissonClient redissonClient = Redisson.create(config);
+//		return redissonClient;
+//	}
 
 }
