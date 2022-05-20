@@ -1,5 +1,7 @@
 redis:
   host: 115.238.152.230
+mysql:
+  host: 1.117.52.207
 server:
   port: 8090
 #  tomcat:
@@ -157,7 +159,7 @@ spring:
         connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
       datasource:
         master:
-          url: jdbc:mysql://1.117.52.207:3306/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          url: jdbc:mysql://${mysql.host}:3306/builders-rnsp?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
           username: root
           password: hlyd3.141592654
 #          url: jdbc:mysql://192.168.20.107:32497/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
@@ -210,7 +212,8 @@ mybatis-plus:
     banner: false
     db-config:
       #主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
-      id-type: ASSIGN_ID
+#      id-type: ASSIGN_ID
+      id-type: AUTO
       # 默认数据库表下划线命名
       table-underline: true
   configuration:
@@ -265,4 +268,5 @@ secure:
       - /minio/upload
       - /auth/login
       - /auth/user
+      - /rnsp171/**
 

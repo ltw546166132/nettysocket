@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltw.module.rnsp171.mapper.CompanyProjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.ltw.module.rnsp171.model.entity.CompanyProject">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="corpId" column="corp_id" jdbcType="INTEGER"/>
+            <result property="appId" column="app_id" jdbcType="VARCHAR"/>
+            <result property="appSecret" column="app_secret" jdbcType="VARCHAR"/>
+            <result property="projectCode" column="project_code" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="loginCode" column="login_code" jdbcType="VARCHAR"/>
+            <result property="loginPassword" column="login_password" jdbcType="VARCHAR"/>
+            <result property="syncStatus" column="sync_status" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="region" column="region" jdbcType="VARCHAR"/>
+            <result property="category" column="category" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="prjStatus" column="prj_status" jdbcType="VARCHAR"/>
+            <result property="supervision" column="supervision" jdbcType="TINYINT"/>
+            <result property="builderLicenses" column="builder_licenses" jdbcType="VARCHAR"/>
+            <result property="schedule" column="schedule" jdbcType="INTEGER"/>
+            <result property="managerDept" column="manager_dept" jdbcType="VARCHAR"/>
+            <result property="winContractPrice" column="win_contract_price" jdbcType="DECIMAL"/>
+            <result property="startDate" column="start_date" jdbcType="TIMESTAMP"/>
+            <result property="completeDate" column="complete_date" jdbcType="TIMESTAMP"/>
+            <result property="attendanceAddress" column="attendance_address" jdbcType="VARCHAR"/>
+            <result property="lat" column="lat" jdbcType="DECIMAL"/>
+            <result property="lng" column="lng" jdbcType="DECIMAL"/>
+            <result property="attendanceArea" column="attendance_area" jdbcType="DECIMAL"/>
+            <result property="attendanceLabel" column="attendance_label" jdbcType="VARCHAR"/>
+            <result property="contractorNum" column="contractor_num" jdbcType="INTEGER"/>
+            <result property="cardReaderType" column="card_reader_type" jdbcType="VARCHAR"/>
+            <result property="platformType" column="platform_type" jdbcType="VARCHAR"/>
+            <result property="permissionSwitch" column="permission_switch" jdbcType="INTEGER"/>
+            <result property="payBankCardNo" column="pay_bank_card_no" jdbcType="VARCHAR"/>
+            <result property="payBankName" column="pay_bank_name" jdbcType="VARCHAR"/>
+            <result property="payBankCode" column="pay_bank_code" jdbcType="VARCHAR"/>
+            <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="delFlag" column="del_flag" jdbcType="TINYINT"/>
+            <result property="addressX" column="address_x" jdbcType="VARCHAR"/>
+            <result property="addressY" column="address_y" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="contact" column="contact" jdbcType="VARCHAR"/>
+            <result property="constructionArea" column="construction_area" jdbcType="DECIMAL"/>
+            <result property="constructionUnit" column="construction_unit" jdbcType="VARCHAR"/>
+            <result property="supervisoryDept" column="supervisory_dept" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="panorama" column="panorama" jdbcType="VARCHAR"/>
+            <result property="planform" column="planform" jdbcType="VARCHAR"/>
+            <result property="monitoring" column="monitoring" jdbcType="VARCHAR"/>
+            <result property="classify" column="classify" jdbcType="VARCHAR"/>
+            <result property="projectPermission" column="project_permission" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,corp_id,app_id,
+        app_secret,project_code,name,
+        login_code,login_password,sync_status,
+        address,province,city,
+        region,category,status,
+        prj_status,supervision,builder_licenses,
+        schedule,manager_dept,win_contract_price,
+        start_date,complete_date,attendance_address,
+        lat,lng,attendance_area,
+        attendance_label,contractor_num,card_reader_type,
+        platform_type,permission_switch,pay_bank_card_no,
+        pay_bank_name,pay_bank_code,create_by,
+        create_time,update_by,update_time,
+        del_flag,address_x,address_y,
+        phone,contact,construction_area,
+        construction_unit,supervisory_dept,remark,
+        panorama,planform,monitoring,
+        classify,project_permission
+    </sql>
+</mapper>

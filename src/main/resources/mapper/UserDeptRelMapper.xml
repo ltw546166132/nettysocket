@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltw.module.rnsp171.mapper.UserDeptRelMapper">
+
+    <resultMap id="BaseResultMap" type="com.ltw.module.rnsp171.model.entity.UserDeptRel">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="delFlag" column="del_flag" jdbcType="TINYINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="deptPlatform" column="dept_platform" jdbcType="INTEGER"/>
+            <result property="platformId" column="platform_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,create_by,create_time,
+        update_by,update_time,del_flag,
+        user_id,dept_id,status,
+        dept_platform,platform_id
+    </sql>
+</mapper>

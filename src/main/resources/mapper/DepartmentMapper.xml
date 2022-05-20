@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ltw.module.rnsp171.mapper.DepartmentMapper">
+
+    <resultMap id="BaseResultMap" type="com.ltw.module.rnsp171.model.entity.Department">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="delFlag" column="del_flag" jdbcType="TINYINT"/>
+            <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+            <result property="visible" column="visible" jdbcType="TINYINT"/>
+            <result property="sortIndex" column="sort_index" jdbcType="INTEGER"/>
+            <result property="deptPlatform" column="dept_platform" jdbcType="INTEGER"/>
+            <result property="level" column="level" jdbcType="INTEGER"/>
+            <result property="platformId" column="platform_id" jdbcType="BIGINT"/>
+            <result property="deptCode" column="dept_code" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,remark,create_by,
+        create_time,update_by,update_time,
+        del_flag,dept_name,parent_id,
+        visible,sort_index,dept_platform,
+        level,platform_id,dept_code
+    </sql>
+</mapper>
