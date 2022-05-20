@@ -19,6 +19,10 @@ public class BaseEntity extends BaseDO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
+    private Long createBy;
+
+    private Long updateBy;
+
     @TableLogic
     private Boolean delFlag;
 }
