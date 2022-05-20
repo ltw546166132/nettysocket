@@ -1,5 +1,6 @@
 package com.ltw.common.config.redis;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 	private int port;
 	@Value("${spring.redis.database}")
 	private int database;
+	@Value("${spring.redis.password}")
+	private String password;
 
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -85,6 +88,9 @@ public class RedisConfig extends CachingConfigurerSupport {
 		config.useSingleServer()
 				.setAddress("redis://" + host + ":" + port)
 				.setDatabase(database);
+		if(StrUtil.isNotBlank(password)){
+			config.useSingleServer().setPassword(password);
+		}
 		return Redisson.create(config);
 	}
 
