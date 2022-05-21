@@ -26,7 +26,7 @@ public class CompanyAdmin extends BaseEntity {
     /**
      * 公司id
      */
-    private Integer corpId;
+    private Long corpId;
 
     /**
      * 关联用户
