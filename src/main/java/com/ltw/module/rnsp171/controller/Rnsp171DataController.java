@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -39,8 +38,10 @@ public class Rnsp171DataController {
     private UserRoleRelService userRoleRelService;
     @Resource
     private UserDeptRelService userDeptRelService;
+    @Resource
+    private UserThirdpartyTokenService userThirdpartyTokenService;
 
-    @GetMapping("/test")
+    @GetMapping("/derive")
     public CommonResult<Boolean> test(){
         log.info("数据导入开始----"+DateUtil.now());
         Date start = new Date();
@@ -196,6 +197,49 @@ public class Rnsp171DataController {
             }
         }
 
+    }
+
+    @RequestMapping("/weixindata")
+    public CommonResult<Boolean> weixindata(){
+        List<CompanyUser> companyUsers = companyUserService.list();
+        List<WorkerAccount> workerAccounts = workerAccountService.list();
+        List<WorkerAccount> addWorkerAccountList = CollUtil.list(false);
+        List<UserThirdpartyToken> addThirdList = CollUtil.list(false);
+        if(CollUtil.isNotEmpty(companyUsers)){
+            for (CompanyUser companyUser : companyUsers){
+                if(StrUtil.isNotBlank(companyUser.getUnionId())){
+                    String phone = companyUser.getPhone();
+                    Optional<WorkerAccount> optionalWorkerAccount = workerAccounts.stream().filter(workerAccount -> StrUtil.equals(phone, workerAccount.getPhone())).findFirst();
+                    if(optionalWorkerAccount.isPresent()){
+                        WorkerAccount workerAccount = optionalWorkerAccount.get();
+                        Long id = workerAccount.getId();
+                        UserThirdpartyToken userThirdpartyToken = new UserThirdpartyToken();
+                        userThirdpartyToken.setUserId(id);
+                        userThirdpartyToken.setType(1);
+                        userThirdpartyToken.setUnionId(companyUser.getUnionId());
+                        userThirdpartyToken.setOpenId(companyUser.getOpenId());
+                        userThirdpartyToken.setName("微信用户");
+                        addThirdList.add(userThirdpartyToken);
+                    }else{
+                        WorkerAccount workerAccount = new WorkerAccount();
+                        workerAccount.setPhone(phone);
+                        workerAccountService.save(workerAccount);
+                        UserThirdpartyToken userThirdpartyToken = new UserThirdpartyToken();
+                        userThirdpartyToken.setUserId(workerAccount.getId());
+                        userThirdpartyToken.setType(1);
+                        userThirdpartyToken.setUnionId(companyUser.getUnionId());
+                        userThirdpartyToken.setOpenId(companyUser.getOpenId());
+                        userThirdpartyToken.setName("微信用户");
+                        addThirdList.add(userThirdpartyToken);
+                    }
+                }
+
+            }
+        }
+        if(CollUtil.isNotEmpty(addThirdList)){
+            userThirdpartyTokenService.saveBatch(addThirdList);
+        }
+        return CommonResult.success(Boolean.TRUE);
     }
 
 }

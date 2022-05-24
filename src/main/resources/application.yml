@@ -1,7 +1,12 @@
 redis:
   host: 115.238.152.230
 mysql:
-  host: 1.117.52.207
+#  host: 1.117.52.207
+#  username: root
+#  password: hlyd3.141592654
+  host: 115.238.152.230
+  username: root
+  password: hang@sjg
 server:
   port: 8090
 #  tomcat:
@@ -160,8 +165,8 @@ spring:
       datasource:
         master:
           url: jdbc:mysql://${mysql.host}:3306/builders-rnsp?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-          username: root
-          password: hlyd3.141592654
+          username: ${mysql.username}
+          password: ${mysql.password}
 #          url: jdbc:mysql://192.168.20.107:32497/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
 #          username: root
 #          password: hlyd3.141592654
