@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ltw.common.api.CommonResult;
+import com.ltw.module.rnsp171.model.dto.ProjectAdminSwitchDTO;
 import com.ltw.module.rnsp171.model.entity.*;
 import com.ltw.module.rnsp171.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,17 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/rnsp171")
 public class Rnsp171DataController {
+
+    static List<ProjectAdminSwitchDTO> switchDTO1 = CollUtil.list(false);
+    static List<ProjectAdminSwitchDTO> switchDTO2 = CollUtil.list(false);
+
+    static {
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("111").projectId(1L).build());
+
+
+
+    }
+
     @Resource
     private DepartmentService departmentService;
     @Resource
@@ -40,16 +52,17 @@ public class Rnsp171DataController {
     private UserDeptRelService userDeptRelService;
     @Resource
     private UserThirdpartyTokenService userThirdpartyTokenService;
+    @Resource
+    private ProjectAdminService projectAdminService;
 
-    @GetMapping("/derive")
-    public CommonResult<Boolean> test(){
+    @GetMapping("/switchdepartment")
+    public CommonResult<Boolean> switchdepartment(){
         log.info("数据导入开始----"+DateUtil.now());
         Date start = new Date();
         //导入企业部门
         List<Company> companyList = companyService.list();
         if(CollUtil.isNotEmpty(companyList)){
             List<Department> list = departmentService.list(new LambdaQueryWrapper<Department>().eq(Department::getParentId, 0).eq(Department::getDeptPlatform, 1));
-
             List<Department> deptList = CollUtil.list(false);
             for (Company company : companyList){
                 String corpName = company.getCorpName();
@@ -114,7 +127,16 @@ public class Rnsp171DataController {
                 departmentService.saveBatch(deptList);
             }
         }
+        log.info("数据导入结束----"+DateUtil.now());
+        Date end = new Date();
+        long between = DateUtil.between(start, end, DateUnit.SECOND);
+        log.info("一共执行"+between+"秒");
+        return CommonResult.success(Boolean.TRUE);
+    }
 
+    @GetMapping("/companyadminswitch")
+    public CommonResult<Boolean> test(){
+        Date start = new Date();
         //导入企业管理员
         List<CompanyUser> companyUsers = companyUserService.list();
         List<WorkerAccount> workerAccounts = workerAccountService.list();
@@ -122,9 +144,13 @@ public class Rnsp171DataController {
         //TODO 需要删除所有CompanyAdmind的普通管理员   需要清空整个UserRoleRel表  需要清空整个UserDeptRel表
         companyAdminService.remove(new LambdaQueryWrapper<CompanyAdmin>().eq(CompanyAdmin::getType, "ORDINARY"));
         List<Long> userRoleRelIds = userRoleRelService.list().stream().map(UserRoleRel::getId).collect(Collectors.toList());
-        userRoleRelService.removeByIds(userRoleRelIds);
+        if(CollUtil.isNotEmpty(userRoleRelIds)){
+            userRoleRelService.removeByIds(userRoleRelIds);
+        }
         List<Long> userDeptRelIds = userDeptRelService.list().stream().map(UserDeptRel::getId).collect(Collectors.toList());
-        userDeptRelService.removeByIds(userDeptRelIds);
+        if(CollUtil.isNotEmpty(userDeptRelIds)){
+            userDeptRelService.removeByIds(userDeptRelIds);
+        }
         List<CompanyAdmin> updateCompanyAdminList = CollUtil.list(false);
         List<UserRoleRel> userRoleRels = CollUtil.list(false);
         List<UserDeptRel> userDeptRels = CollUtil.list(false);
@@ -199,6 +225,29 @@ public class Rnsp171DataController {
 
     }
 
+    private void executeProjectUserId(Long userId, Long projectId, List<UserRoleRel> userRoleRels, List<UserDeptRel> userDeptRels, List<Department> departments){
+        UserRoleRel userRoleRel = new UserRoleRel();
+        userRoleRel.setUserId(userId);
+        userRoleRel.setRoleType(2);
+        userRoleRel.setRoleId(1L);
+        userRoleRel.setRoleRelId(projectId);
+        userRoleRel.setRoleCode("ADMIN");
+        userRoleRel.setRoleName("项目超级管理员");
+        userRoleRels.add(userRoleRel);
+        if(CollUtil.isNotEmpty(departments)){
+            Optional<Department> departmentOptional = departments.stream().filter(department -> department.getPlatformId().equals(projectId)).findFirst();
+            if(departmentOptional.isPresent()){
+                UserDeptRel userDeptRel = new UserDeptRel();
+                userDeptRel.setUserId(userId);
+                userDeptRel.setDeptId(departmentOptional.get().getId());
+                userDeptRel.setDeptPlatform(2);
+                userDeptRel.setPlatformId(projectId);
+                userDeptRels.add(userDeptRel);
+            }
+        }
+
+    }
+
     @RequestMapping("/weixindata")
     public CommonResult<Boolean> weixindata(){
         List<CompanyUser> companyUsers = companyUserService.list();
@@ -238,6 +287,59 @@ public class Rnsp171DataController {
         }
         if(CollUtil.isNotEmpty(addThirdList)){
             userThirdpartyTokenService.saveBatch(addThirdList);
+        }
+        return CommonResult.success(Boolean.TRUE);
+    }
+
+    @GetMapping("/projectadminswitch")
+    public CommonResult<Boolean> projectAdminSwitch(){
+        Date start = new Date();
+        List<UserRoleRel> userRoleRels = CollUtil.list(false);
+        List<UserDeptRel> userDeptRels = CollUtil.list(false);
+        List<ProjectAdmin> projectAdminAddList = CollUtil.list(false);
+        List<WorkerAccount> workerAccounts = workerAccountService.list();
+        List<Department> departments = departmentService.list(new LambdaQueryWrapper<Department>().eq(Department::getLevel, 1).eq(Department::getParentId, 0).eq(Department::getDeptPlatform, 2));
+        if(CollUtil.isNotEmpty(switchDTO1)){
+            for (ProjectAdminSwitchDTO projectAdminSwitchDTO : switchDTO1){
+                Optional<WorkerAccount> optionalWorkerAccount = workerAccounts.stream().filter(workerAccount -> StrUtil.equals(projectAdminSwitchDTO.getPhone(), workerAccount.getPhone())).findFirst();
+                if(optionalWorkerAccount.isPresent()){
+                    WorkerAccount workerAccount = optionalWorkerAccount.get();
+                    ProjectAdmin projectAdmin = new ProjectAdmin();
+                    projectAdmin.setProjectId(projectAdminSwitchDTO.getProjectId());
+                    projectAdmin.setUserId(workerAccount.getId());
+                    projectAdmin.setStatus("CURRENT");
+                    projectAdmin.setType("SUPER_ADMIN");
+                    projectAdmin.setNickName(workerAccount.getNickName());
+                    projectAdminAddList.add(projectAdmin);
+                    executeProjectUserId(workerAccount.getId(), projectAdminSwitchDTO.getProjectId(), userRoleRels, userDeptRels, departments);
+                }else{
+                    WorkerAccount workerAccount = new WorkerAccount();
+                    workerAccount.setPhone(projectAdminSwitchDTO.getPhone());
+                    workerAccountService.save(workerAccount);
+                    ProjectAdmin projectAdmin = new ProjectAdmin();
+                    projectAdmin.setProjectId(projectAdminSwitchDTO.getProjectId());
+                    projectAdmin.setUserId(workerAccount.getId());
+                    projectAdmin.setStatus("CURRENT");
+                    projectAdmin.setType("SUPER_ADMIN");
+                    projectAdmin.setNickName(workerAccount.getNickName());
+                    projectAdminAddList.add(projectAdmin);
+                    executeProjectUserId(workerAccount.getId(), projectAdminSwitchDTO.getProjectId(), userRoleRels, userDeptRels, departments);
+                }
+
+            }
+            if(CollUtil.isNotEmpty(projectAdminAddList)){
+                projectAdminService.saveBatch(projectAdminAddList);
+            }
+            if(CollUtil.isNotEmpty(userRoleRels)){
+                userRoleRelService.saveBatch(userRoleRels);
+            }
+            if(CollUtil.isNotEmpty(userDeptRels)){
+                userDeptRelService.saveBatch(userDeptRels);
+            }
+            log.info("数据导入结束----"+DateUtil.now());
+            Date end = new Date();
+            long between = DateUtil.between(start, end, DateUnit.SECOND);
+            log.info("一共执行"+between+"秒");
         }
         return CommonResult.success(Boolean.TRUE);
     }
