@@ -3,9 +3,14 @@ package com.ltw.module.rnsp171.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ltw.common.api.CommonResult;
+import com.ltw.common.utils.PasswordUtil;
+import com.ltw.module.rnsp171.model.dto.CompanyAdminSwitchDTO;
 import com.ltw.module.rnsp171.model.dto.ProjectAdminSwitchDTO;
 import com.ltw.module.rnsp171.model.entity.*;
 import com.ltw.module.rnsp171.service.*;
@@ -24,15 +29,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/rnsp171")
 public class Rnsp171DataController {
 
+    //项目管理员数据源
     static List<ProjectAdminSwitchDTO> switchDTO1 = CollUtil.list(false);
-    static List<ProjectAdminSwitchDTO> switchDTO2 = CollUtil.list(false);
+    //企业管理员数据源
+    static List<CompanyAdminSwitchDTO> switchDTO2 = CollUtil.list(false);
 
     static {
         switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("111").projectId(1L).build());
 
 
-
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("222").password("q11111111").build());
     }
+
 
     @Resource
     private DepartmentService departmentService;
@@ -55,6 +63,10 @@ public class Rnsp171DataController {
     @Resource
     private ProjectAdminService projectAdminService;
 
+    /**
+     * 导入部门
+     * @return
+     */
     @GetMapping("/switchdepartment")
     public CommonResult<Boolean> switchdepartment(){
         log.info("数据导入开始----"+DateUtil.now());
@@ -134,6 +146,10 @@ public class Rnsp171DataController {
         return CommonResult.success(Boolean.TRUE);
     }
 
+    /**
+     * 导入企业管理员
+     * @return
+     */
     @GetMapping("/companyadminswitch")
     public CommonResult<Boolean> test(){
         Date start = new Date();
@@ -248,6 +264,10 @@ public class Rnsp171DataController {
 
     }
 
+    /**
+     * 导入微信公众号绑定关系
+     * @return
+     */
     @RequestMapping("/weixindata")
     public CommonResult<Boolean> weixindata(){
         List<CompanyUser> companyUsers = companyUserService.list();
@@ -291,6 +311,10 @@ public class Rnsp171DataController {
         return CommonResult.success(Boolean.TRUE);
     }
 
+    /**
+     * 导入项目管理员数据
+     * @return
+     */
     @GetMapping("/projectadminswitch")
     public CommonResult<Boolean> projectAdminSwitch(){
         Date start = new Date();
@@ -344,4 +368,31 @@ public class Rnsp171DataController {
         return CommonResult.success(Boolean.TRUE);
     }
 
+    /**
+     * 修改企业管理员账号密码
+     */
+    @GetMapping("/updatecompanypassword")
+    public CommonResult<Boolean> updateCompanyPassword(){
+        if(CollUtil.isNotEmpty(switchDTO2)){
+            List<WorkerAccount> updateAccount = CollUtil.list(false);
+            List<WorkerAccount> workerAccounts = workerAccountService.list();
+            for (CompanyAdminSwitchDTO companyAdminSwitchDTO : switchDTO2){
+                Optional<WorkerAccount> optionalWorkerAccount = workerAccounts.stream().filter(workerAccount -> StrUtil.equals(companyAdminSwitchDTO.getPhone(), workerAccount.getPhone())).findFirst();
+                if(optionalWorkerAccount.isPresent()){
+                    WorkerAccount workerAccount = optionalWorkerAccount.get();
+                    String salt = workerAccount.getSalt();
+                    if(StrUtil.isBlank(salt)){
+                        salt = PasswordUtil.getSalt();
+                    }
+                    workerAccount.setPassword(SecureUtil.md5(companyAdminSwitchDTO.getPassword() + salt));
+                    updateAccount.add(workerAccount);
+                }
+            }
+            if(CollUtil.isNotEmpty(updateAccount)){
+                boolean result = workerAccountService.updateBatchById(updateAccount);
+                CommonResult.success(result);
+            }
+        }
+        return CommonResult.success(Boolean.FALSE);
+    }
 }
