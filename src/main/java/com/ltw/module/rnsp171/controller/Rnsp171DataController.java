@@ -357,14 +357,20 @@ public class Rnsp171DataController {
         List<UserRoleRel> userRoleRels = CollUtil.list(false);
         List<UserDeptRel> userDeptRels = CollUtil.list(false);
         List<ProjectAdmin> projectAdminAddList = CollUtil.list(false);
+        List<ProjectAdmin> projectAdminList = projectAdminService.list();
         List<CompanyProject> projectList = companyProjectService.list();
         List<WorkerAccount> workerAccounts = workerAccountService.list();
         List<Department> departments = departmentService.list(new LambdaQueryWrapper<Department>().eq(Department::getLevel, 1).eq(Department::getParentId, 0).eq(Department::getDeptPlatform, 2));
         if(CollUtil.isNotEmpty(switchDTO1)){
-            for (ProjectAdminSwitchDTO projectAdminSwitchDTO : switchDTO1){
+            projectflag : for (ProjectAdminSwitchDTO projectAdminSwitchDTO : switchDTO1){
                 Optional<WorkerAccount> optionalWorkerAccount = workerAccounts.stream().filter(workerAccount -> StrUtil.equals(projectAdminSwitchDTO.getPhone(), workerAccount.getPhone())).findFirst();
                 if(optionalWorkerAccount.isPresent()){
                     WorkerAccount workerAccount = optionalWorkerAccount.get();
+                    for (ProjectAdmin projectAdmin : projectAdminList) {
+                        if(projectAdmin.getProjectId().equals(projectAdminSwitchDTO.getProjectId()) && projectAdmin.getUserId().equals(workerAccount.getId())){
+                            continue projectflag;
+                        }
+                    }
                     ProjectAdmin projectAdmin = new ProjectAdmin();
                     projectAdmin.setProjectId(projectAdminSwitchDTO.getProjectId());
                     projectAdmin.setUserId(workerAccount.getId());
