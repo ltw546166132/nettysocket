@@ -35,10 +35,46 @@ public class Rnsp171DataController {
     static List<CompanyAdminSwitchDTO> switchDTO2 = CollUtil.list(false);
 
     static {
-        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("111").projectId(1L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("18858049113").projectId(18L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("18955368527").projectId(22L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13567866800").projectId(29L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("17816382231").projectId(34L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13586823645").projectId(35L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13732150031").projectId(69L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("15800370755").projectId(74L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("15888088180").projectId(40L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13968354226").projectId(46L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("18069248732").projectId(57L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("18069248732").projectId(79L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13586885595").projectId(64L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13586885595").projectId(63L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13586885595").projectId(80L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("18657009333").projectId(54L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13606803765").projectId(52L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13372570222").projectId(66L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("18073847505").projectId(67L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("18800306880").projectId(77L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13906605283").projectId(78L).build());
+        switchDTO1.add(ProjectAdminSwitchDTO.builder().phone("13586823645").projectId(83L).build());
 
 
-        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("222").password("q11111111").build());
+
+
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("18858049113").password("q1111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("13681665047").password("bs123456").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("13567866800").password("hyzx123456").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("17816382231").password("q1111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("18857985200").password("q1111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("15888088180").password("zhang088180").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("18757423821").password("asd123123").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("13858272266").password("q1111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("13586885595").password("yzjs111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("18657009333").password("q1111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("13606803765").password("q1111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("13067851277").password("q1111111").build());
+        switchDTO2.add(CompanyAdminSwitchDTO.builder().phone("13067851277").password("q1111111").build());
+
+
     }
 
 
@@ -321,6 +357,7 @@ public class Rnsp171DataController {
         List<UserRoleRel> userRoleRels = CollUtil.list(false);
         List<UserDeptRel> userDeptRels = CollUtil.list(false);
         List<ProjectAdmin> projectAdminAddList = CollUtil.list(false);
+        List<CompanyProject> projectList = companyProjectService.list();
         List<WorkerAccount> workerAccounts = workerAccountService.list();
         List<Department> departments = departmentService.list(new LambdaQueryWrapper<Department>().eq(Department::getLevel, 1).eq(Department::getParentId, 0).eq(Department::getDeptPlatform, 2));
         if(CollUtil.isNotEmpty(switchDTO1)){
@@ -339,6 +376,18 @@ public class Rnsp171DataController {
                 }else{
                     WorkerAccount workerAccount = new WorkerAccount();
                     workerAccount.setPhone(projectAdminSwitchDTO.getPhone());
+                    if(CollUtil.isNotEmpty(projectList)){
+                        Optional<CompanyProject> projectOptional = projectList.stream().filter(companyProject -> companyProject.getId().equals(projectAdminSwitchDTO.getProjectId())).findFirst();
+                        if(projectOptional.isPresent()){
+                            CompanyProject project = projectOptional.get();
+                            if(StrUtil.isNotBlank(project.getLoginPassword())){
+                                String salt = PasswordUtil.getSalt();
+                                workerAccount.setSalt(salt);
+                                workerAccount.setPassword(SecureUtil.md5(project.getLoginPassword() + salt));
+                            }
+                        }
+                    }
+
                     workerAccountService.save(workerAccount);
                     ProjectAdmin projectAdmin = new ProjectAdmin();
                     projectAdmin.setProjectId(projectAdminSwitchDTO.getProjectId());
@@ -383,6 +432,7 @@ public class Rnsp171DataController {
                     String salt = workerAccount.getSalt();
                     if(StrUtil.isBlank(salt)){
                         salt = PasswordUtil.getSalt();
+                        workerAccount.setSalt(salt);
                     }
                     workerAccount.setPassword(SecureUtil.md5(companyAdminSwitchDTO.getPassword() + salt));
                     updateAccount.add(workerAccount);
