@@ -3,10 +3,8 @@ package com.ltw.module.rnsp171.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ltw.common.api.CommonResult;
 import com.ltw.common.utils.PasswordUtil;
@@ -371,6 +369,19 @@ public class Rnsp171DataController {
                             continue projectflag;
                         }
                     }
+                    if(StrUtil.isBlank(workerAccount.getPassword()) || StrUtil.isBlank(workerAccount.getSalt())){
+                        Optional<CompanyProject> optionalCompanyProject = projectList.stream().filter(companyProject -> companyProject.getId().equals(projectAdminSwitchDTO.getProjectId())).findFirst();
+                        if(optionalCompanyProject.isPresent()){
+                            CompanyProject project = optionalCompanyProject.get();
+                            if(StrUtil.isNotBlank(project.getLoginPassword())){
+                                String salt = PasswordUtil.getSalt();
+                                workerAccount.setSalt(salt);
+                                workerAccount.setPassword(SecureUtil.md5(project.getLoginPassword() + salt));
+                                workerAccountService.updateById(workerAccount);
+                            }
+                        }
+                    }
+
                     ProjectAdmin projectAdmin = new ProjectAdmin();
                     projectAdmin.setProjectId(projectAdminSwitchDTO.getProjectId());
                     projectAdmin.setUserId(workerAccount.getId());
